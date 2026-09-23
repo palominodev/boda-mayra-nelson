@@ -1,0 +1,126 @@
+---
+import { weddingConfig } from '../config/wedding.config';
+const { venues } = weddingConfig;
+---
+
+<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-white/50" id="ubicaciones">
+  <div class="text-center mb-8">
+    <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
+      Dónde & Cuándo
+    </span>
+    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
+      Sedes & Cómo Llegar
+    </h2>
+    <p class="text-xs text-[#6B6560] font-sans mt-2 max-w-xs mx-auto">
+      Accedé con un toque a tu app de navegación preferida para llegar sin demoras.
+    </p>
+  </div>
+
+  <div class="space-y-6 max-w-xs mx-auto">
+    <!-- Ceremony Venue Card -->
+    <div class="bg-white border border-[#E8E3DC] rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-semibold font-sans bg-[#C5A880]/15 text-[#9A7B4F]">
+            {venues.ceremony.type}
+          </span>
+          <span class="text-xs font-sans font-bold text-[#1C1917]">{venues.ceremony.time}</span>
+        </div>
+
+        <h3 class="font-serif text-xl font-semibold text-[#1C1917] mb-1">
+          {venues.ceremony.name}
+        </h3>
+
+        <p class="text-xs font-sans text-[#44403C] mb-1">
+          📍 {venues.ceremony.address}, {venues.ceremony.city}
+        </p>
+
+        {venues.ceremony.notes && (
+          <p class="text-[11px] font-sans text-[#6B6560] italic mt-2 bg-[#FDFBF7] p-2 rounded-lg border border-[#E8E3DC]/60">
+            ℹ️ {venues.ceremony.notes}
+          </p>
+        )}
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-[#E8E3DC]/60">
+        <a
+          href={venues.ceremony.googleMapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="h-11 inline-flex items-center justify-center gap-1.5 px-3 rounded-xl bg-[#F9F6F0] hover:bg-[#EFE8DE] text-[#1C1917] text-xs font-sans font-semibold transition-colors border border-[#E8E3DC]"
+        >
+          <svg class="w-3.5 h-3.5 text-[#4285F4]" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <span>Google Maps</span>
+        </a>
+
+        <a
+          href={venues.ceremony.wazeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="h-11 inline-flex items-center justify-center gap-1.5 px-3 rounded-xl bg-[#F9F6F0] hover:bg-[#EFE8DE] text-[#1C1917] text-xs font-sans font-semibold transition-colors border border-[#E8E3DC]"
+        >
+          <svg class="w-3.5 h-3.5 text-[#33CCFF]" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm3.5 11a1.5 1.5 0 111.5-1.5 1.5 1.5 0 01-1.5 1.5zm-7 0A1.5 1.5 0 1110 11.5 1.5 1.5 0 018.5 13z"/>
+          </svg>
+          <span>Waze</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Reception Venue Card -->
+    <div class="bg-white border border-[#E8E3DC] rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-semibold font-sans bg-[#C5A880]/15 text-[#9A7B4F]">
+            {venues.reception.type}
+          </span>
+          <span class="text-xs font-sans font-bold text-[#1C1917]">{venues.reception.time}</span>
+        </div>
+
+        <h3 class="font-serif text-xl font-semibold text-[#1C1917] mb-1">
+          {venues.reception.name}
+        </h3>
+
+        <p class="text-xs font-sans text-[#44403C] mb-1">
+          📍 {venues.reception.address}, {venues.reception.city}
+        </p>
+
+        {venues.reception.notes && (
+          <p class="text-[11px] font-sans text-[#6B6560] italic mt-2 bg-[#FDFBF7] p-2 rounded-lg border border-[#E8E3DC]/60">
+            ℹ️ {venues.reception.notes}
+          </p>
+        )}
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-[#E8E3DC]/60">
+        <a
+          href={venues.reception.googleMapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="h-11 inline-flex items-center justify-center gap-1.5 px-3 rounded-xl bg-[#F9F6F0] hover:bg-[#EFE8DE] text-[#1C1917] text-xs font-sans font-semibold transition-colors border border-[#E8E3DC]"
+        >
+          <svg class="w-3.5 h-3.5 text-[#4285F4]" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <span>Google Maps</span>
+        </a>
+
+        <a
+          href={venues.reception.wazeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="h-11 inline-flex items-center justify-center gap-1.5 px-3 rounded-xl bg-[#F9F6F0] hover:bg-[#EFE8DE] text-[#1C1917] text-xs font-sans font-semibold transition-colors border border-[#E8E3DC]"
+        >
+          <svg class="w-3.5 h-3.5 text-[#33CCFF]" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm3.5 11a1.5 1.5 0 111.5-1.5 1.5 1.5 0 01-1.5 1.5zm-7 0A1.5 1.5 0 1110 11.5 1.5 1.5 0 018.5 13z"/>
+          </svg>
+          <span>Waze</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

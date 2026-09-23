@@ -1,0 +1,566 @@
+---
+import { weddingConfig } from '../config/wedding.config';
+const { event } = weddingConfig;
+---
+
+<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-[#FDFBF7]" id="rsvp">
+  <div class="text-center mb-8">
+    <span class="text-[11px] uppercase tracking-[0.25em] text-[#C5A880] font-sans font-bold block mb-2">
+      Confirmación de Asistencia
+    </span>
+    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
+      ¿Nos Acompañás?
+    </h2>
+    <p class="text-xs text-[#6B6560] font-sans mt-2 max-w-xs mx-auto">
+      Por favor confirmá tu asistencia antes del 1 de Noviembre de 2026.
+    </p>
+  </div>
+
+  <!-- Micro-Stepper Card Container -->
+  <div class="bg-white border border-[#E8E3DC] rounded-3xl p-6 shadow-lg max-w-xs mx-auto relative overflow-hidden" id="rsvp-card">
+    
+    <!-- Progress Indicator Bar -->
+    <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#E8E3DC]/60" id="rsvp-progress-header">
+      <div class="flex items-center gap-2">
+        <span class="w-6 h-6 rounded-full bg-[#1C1917] text-white text-xs font-sans font-bold flex items-center justify-center" id="step-number-badge">1</span>
+        <span class="text-xs font-sans font-semibold text-[#1C1917]" id="step-title-text">Tu Asistencia</span>
+      </div>
+      <span class="text-[11px] font-sans text-[#6B6560]" id="step-counter-text">Paso 1 de 3</span>
+    </div>
+
+    <!-- STEP 1: Identification & Attendance Decision -->
+    <div id="step-1" class="space-y-5">
+      <div>
+        <label for="guest-name" class="block text-xs font-sans font-semibold text-[#1C1917] mb-1.5 text-left">
+          Nombre y Apellido <span class="text-rose-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="guest-name"
+          placeholder="Ej: Carolina Martínez"
+          class="w-full h-12 px-4 rounded-xl border border-[#E8E3DC] bg-[#FDFBF7] text-[#1C1917] text-sm font-sans focus:outline-hidden focus:border-[#C5A880] focus:ring-2 focus:ring-[#C5A880]/20 transition-all placeholder:text-[#6B6560]/60"
+          required
+        />
+        <p id="name-error" class="hidden text-[11px] text-rose-500 text-left mt-1">Por favor ingresá tu nombre y apellido.</p>
+      </div>
+
+      <div>
+        <label class="block text-xs font-sans font-semibold text-[#1C1917] mb-2 text-left">
+          ¿Asistirás a la boda? <span class="text-rose-500">*</span>
+        </label>
+        <div class="grid grid-cols-1 gap-2.5">
+          <label class="relative flex items-center p-3.5 rounded-xl border-2 border-[#E8E3DC] cursor-pointer transition-all hover:bg-[#F9F6F0] has-checked:border-[#C5A880] has-checked:bg-[#C5A880]/10">
+            <input type="radio" name="attendance" value="yes" checked class="sr-only" />
+            <div class="flex items-center gap-3 text-left">
+              <span class="text-xl">🎉</span>
+              <div>
+                <span class="block text-xs font-sans font-bold text-[#1C1917]">¡Sí, con mucho gusto!</span>
+                <span class="block text-[11px] text-[#6B6560]">Ahí estaré para celebrar juntos.</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="relative flex items-center p-3.5 rounded-xl border-2 border-[#E8E3DC] cursor-pointer transition-all hover:bg-[#F9F6F0] has-checked:border-[#1C1917] has-checked:bg-stone-100">
+            <input type="radio" name="attendance" value="no" class="sr-only" />
+            <div class="flex items-center gap-3 text-left">
+              <span class="text-xl">😢</span>
+              <div>
+                <span class="block text-xs font-sans font-bold text-[#1C1917]">Lamentablemente no podré</span>
+                <span class="block text-[11px] text-[#6B6560]">Los acompañaré con el corazón.</span>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        id="btn-step1-next"
+        class="w-full h-12 rounded-xl bg-[#1C1917] hover:bg-[#332F2C] text-white text-xs font-sans font-semibold tracking-wider uppercase transition-transform active:scale-[0.98] shadow-md flex items-center justify-center gap-2 cursor-pointer mt-4"
+      >
+        <span>Continuar</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- STEP 2: Passes & Dietary Preferences (Only if attending) -->
+    <div id="step-2" class="hidden space-y-5">
+      <!-- Passes Counter -->
+      <div class="text-left">
+        <label class="block text-xs font-sans font-semibold text-[#1C1917] mb-2">
+          Cantidad de pases confirmados
+        </label>
+        <div class="flex items-center justify-between bg-[#FDFBF7] border border-[#E8E3DC] rounded-xl p-2 max-w-[180px]">
+          <button
+            type="button"
+            id="btn-pass-minus"
+            class="w-9 h-9 rounded-lg bg-white border border-[#E8E3DC] flex items-center justify-center font-bold text-base text-[#1C1917] hover:bg-[#EFE8DE] active:scale-95 cursor-pointer"
+          >
+            -
+          </button>
+          <span id="pass-count-display" class="font-serif text-xl font-bold text-[#1C1917]">1</span>
+          <button
+            type="button"
+            id="btn-pass-plus"
+            class="w-9 h-9 rounded-lg bg-white border border-[#E8E3DC] flex items-center justify-center font-bold text-base text-[#1C1917] hover:bg-[#EFE8DE] active:scale-95 cursor-pointer"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- Companion Name (conditional if passes > 1) -->
+      <div id="companion-field" class="hidden text-left">
+        <label for="companion-name" class="block text-xs font-sans font-semibold text-[#1C1917] mb-1.5">
+          Nombre de acompañante(s)
+        </label>
+        <input
+          type="text"
+          id="companion-name"
+          placeholder="Ej: Lucas González"
+          class="w-full h-11 px-3.5 rounded-xl border border-[#E8E3DC] bg-[#FDFBF7] text-[#1C1917] text-xs font-sans focus:outline-hidden focus:border-[#C5A880]"
+        />
+      </div>
+
+      <!-- Dietary Restriction Chips -->
+      <div class="text-left">
+        <label class="block text-xs font-sans font-semibold text-[#1C1917] mb-2">
+          Restricciones alimentarias o menú
+        </label>
+        <div class="flex flex-wrap gap-2" id="diet-chips-container">
+          <button type="button" class="diet-chip px-3 py-1.5 rounded-full text-xs font-sans border border-[#E8E3DC] bg-[#FDFBF7] text-[#44403C] transition-all hover:bg-stone-200 active:scale-95 cursor-pointer selected" data-value="Estándar">
+            🍽️ Estándar
+          </button>
+          <button type="button" class="diet-chip px-3 py-1.5 rounded-full text-xs font-sans border border-[#E8E3DC] bg-[#FDFBF7] text-[#44403C] transition-all hover:bg-stone-200 active:scale-95 cursor-pointer" data-value="Celíaco (Sin TACC)">
+            🌾 Sin TACC
+          </button>
+          <button type="button" class="diet-chip px-3 py-1.5 rounded-full text-xs font-sans border border-[#E8E3DC] bg-[#FDFBF7] text-[#44403C] transition-all hover:bg-stone-200 active:scale-95 cursor-pointer" data-value="Vegetariano">
+            🥗 Vegetariano
+          </button>
+          <button type="button" class="diet-chip px-3 py-1.5 rounded-full text-xs font-sans border border-[#E8E3DC] bg-[#FDFBF7] text-[#44403C] transition-all hover:bg-stone-200 active:scale-95 cursor-pointer" data-value="Vegano">
+            🌱 Vegano
+          </button>
+          <button type="button" class="diet-chip px-3 py-1.5 rounded-full text-xs font-sans border border-[#E8E3DC] bg-[#FDFBF7] text-[#44403C] transition-all hover:bg-stone-200 active:scale-95 cursor-pointer" data-value="Menú Infantil">
+            👶 Menú Infantil
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button
+          type="button"
+          id="btn-step2-prev"
+          class="w-1/3 h-12 rounded-xl border border-[#E8E3DC] bg-white text-[#1C1917] text-xs font-sans font-semibold tracking-wider uppercase hover:bg-[#F9F6F0] cursor-pointer"
+        >
+          Volver
+        </button>
+        <button
+          type="button"
+          id="btn-step2-next"
+          class="w-2/3 h-12 rounded-xl bg-[#1C1917] hover:bg-[#332F2C] text-white text-xs font-sans font-semibold tracking-wider uppercase shadow-md flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span>Siguiente</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Song Suggestion & Optional Message -->
+    <div id="step-3" class="hidden space-y-5 text-left">
+      <div>
+        <label for="dj-song" class="block text-xs font-sans font-semibold text-[#1C1917] mb-1.5">
+          ¿Qué canción no puede faltar en la fiesta? 🎵
+        </label>
+        <input
+          type="text"
+          id="dj-song"
+          placeholder="Ej: Vivir Mi Vida - Marc Anthony"
+          class="w-full h-11 px-3.5 rounded-xl border border-[#E8E3DC] bg-[#FDFBF7] text-[#1C1917] text-xs font-sans focus:outline-hidden focus:border-[#C5A880]"
+        />
+        <span class="text-[10px] text-[#6B6560] block mt-1">El DJ se encargará de ponerla a sonar.</span>
+      </div>
+
+      <div>
+        <label for="wishes-note" class="block text-xs font-sans font-semibold text-[#1C1917] mb-1.5">
+          Dedicatoria para los novios 💌 <span class="text-[10px] text-[#6B6560] font-normal">(Opcional)</span>
+        </label>
+        <textarea
+          id="wishes-note"
+          rows="3"
+          placeholder="Dejá un mensaje lindo para Nelson y Mayra..."
+          class="w-full p-3 rounded-xl border border-[#E8E3DC] bg-[#FDFBF7] text-[#1C1917] text-xs font-sans focus:outline-hidden focus:border-[#C5A880] resize-none"
+        ></textarea>
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button
+          type="button"
+          id="btn-step3-prev"
+          class="w-1/3 h-12 rounded-xl border border-[#E8E3DC] bg-white text-[#1C1917] text-xs font-sans font-semibold tracking-wider uppercase hover:bg-[#F9F6F0] cursor-pointer"
+        >
+          Volver
+        </button>
+        <button
+          type="button"
+          id="btn-submit-rsvp"
+          class="w-2/3 h-12 rounded-xl bg-[#C5A880] hover:bg-[#9A7B4F] text-white text-xs font-sans font-bold tracking-wider uppercase shadow-md flex items-center justify-center gap-2 cursor-pointer transition-colors"
+        >
+          <span>Confirmar</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP DECLINED: For guests who cannot attend -->
+    <div id="step-declined" class="hidden space-y-4 text-center py-4">
+      <div class="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center mx-auto text-2xl">
+        💌
+      </div>
+      <h3 class="font-serif text-2xl text-[#1C1917]">¡Gracias por avisarnos!</h3>
+      <p class="text-xs text-[#6B6560] font-sans leading-relaxed max-w-xs mx-auto">
+        Lamentamos mucho que no puedas acompañarnos, pero sabemos que estarás con nosotros en espíritu y cariño.
+      </p>
+
+      <div class="text-left pt-2">
+        <label for="declined-wishes" class="block text-xs font-sans font-semibold text-[#1C1917] mb-1.5">
+          Si deseás, dejá unas palabras para Nelson y Mayra:
+        </label>
+        <textarea
+          id="declined-wishes"
+          rows="3"
+          placeholder="Escribí tu mensaje aquí..."
+          class="w-full p-3 rounded-xl border border-[#E8E3DC] bg-[#FDFBF7] text-[#1C1917] text-xs font-sans focus:outline-hidden focus:border-[#C5A880] resize-none"
+        ></textarea>
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button
+          type="button"
+          id="btn-declined-prev"
+          class="w-1/3 h-11 rounded-xl border border-[#E8E3DC] bg-white text-[#1C1917] text-xs font-sans font-semibold uppercase hover:bg-[#F9F6F0] cursor-pointer"
+        >
+          Volver
+        </button>
+        <button
+          type="button"
+          id="btn-declined-submit"
+          class="w-2/3 h-11 rounded-xl bg-[#1C1917] text-white text-xs font-sans font-semibold tracking-wider uppercase shadow-md cursor-pointer"
+        >
+          Enviar Respuesta
+        </button>
+      </div>
+    </div>
+
+    <!-- SUCCESS SCREEN: Digital Ticket / Boarding Pass Receipt -->
+    <div id="step-success" class="hidden space-y-5 text-center">
+      <!-- Confetti trigger anchor -->
+      <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-2xl shadow-inner">
+        ✓
+      </div>
+
+      <div>
+        <span class="text-[10px] uppercase font-sans tracking-widest text-[#C5A880] font-bold block mb-1">
+          ¡Confirmación Exitosa!
+        </span>
+        <h3 class="font-serif text-3xl text-[#1C1917] leading-tight" id="success-headline">
+          ¡Nos vemos en la boda!
+        </h3>
+      </div>
+
+      <!-- Ticket Card -->
+      <div class="bg-[#F9F6F0] border-2 border-dashed border-[#C5A880]/60 rounded-2xl p-4 text-left space-y-2 relative shadow-xs">
+        <div class="flex justify-between items-center pb-2 border-b border-[#E8E3DC]">
+          <span class="font-serif text-sm font-bold text-[#1C1917]">Pase de Asistencia</span>
+          <span class="text-[10px] font-mono uppercase bg-[#C5A880]/20 text-[#9A7B4F] px-2 py-0.5 rounded-full font-bold">VÁLIDO</span>
+        </div>
+
+        <div>
+          <span class="text-[10px] text-[#6B6560] block">Titular</span>
+          <span class="text-xs font-sans font-bold text-[#1C1917]" id="ticket-guest-name">--</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <div>
+            <span class="text-[10px] text-[#6B6560] block">Pases</span>
+            <span class="text-xs font-sans font-bold text-[#1C1917]" id="ticket-passes">1 persona</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-[#6B6560] block">Menú</span>
+            <span class="text-xs font-sans font-bold text-[#1C1917]" id="ticket-diet">Estándar</span>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-[#E8E3DC] text-[11px] text-[#6B6560]">
+          📅 {event.displayDate}
+        </div>
+      </div>
+
+      <p class="text-xs font-sans text-[#6B6560] leading-relaxed">
+        Guardamos tu respuesta. ¡Estamos muy felices de contar con vos para este gran día!
+      </p>
+
+      <!-- Edit answer option -->
+      <div class="pt-2">
+        <button
+          type="button"
+          id="btn-edit-rsvp"
+          class="text-xs font-sans text-[#C5A880] underline hover:text-[#9A7B4F] cursor-pointer"
+        >
+          ¿Necesitás modificar tu respuesta? Hacé clic acá
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import confetti from 'canvas-confetti';
+
+  function initRSVP() {
+    let currentStep = 1;
+    let attendance = 'yes';
+    let passes = 1;
+    let selectedDiets = ['Estándar'];
+
+    const stepHeader = document.getElementById('rsvp-progress-header');
+    const stepNumberBadge = document.getElementById('step-number-badge');
+    const stepTitleText = document.getElementById('step-title-text');
+    const stepCounterText = document.getElementById('step-counter-text');
+
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const step3 = document.getElementById('step-3');
+    const stepDeclined = document.getElementById('step-declined');
+    const stepSuccess = document.getElementById('step-success');
+
+    const guestNameInput = document.getElementById('guest-name') as HTMLInputElement;
+    const nameError = document.getElementById('name-error');
+    const companionField = document.getElementById('companion-field');
+    const passDisplay = document.getElementById('pass-count-display');
+
+    // Load existing response if available
+    const savedRSVP = localStorage.getItem('nelson_mayra_rsvp');
+    if (savedRSVP) {
+      try {
+        const parsed = JSON.parse(savedRSVP);
+        showSuccessState(parsed);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Step 1: Next button
+    const btnStep1Next = document.getElementById('btn-step1-next');
+    btnStep1Next?.addEventListener('click', () => {
+      const name = guestNameInput?.value.trim();
+      if (!name) {
+        nameError?.classList.remove('hidden');
+        guestNameInput?.focus();
+        return;
+      }
+      nameError?.classList.add('hidden');
+
+      const attendanceRadio = document.querySelector('input[name="attendance"]:checked') as HTMLInputElement;
+      attendance = attendanceRadio ? attendanceRadio.value : 'yes';
+
+      if (attendance === 'no') {
+        goToStep('declined');
+      } else {
+        goToStep(2);
+      }
+    });
+
+    // Pass counter buttons
+    const btnPassMinus = document.getElementById('btn-pass-minus');
+    const btnPassPlus = document.getElementById('btn-pass-plus');
+
+    btnPassMinus?.addEventListener('click', () => {
+      if (passes > 1) {
+        passes--;
+        updatePasses();
+      }
+    });
+
+    btnPassPlus?.addEventListener('click', () => {
+      if (passes < 6) {
+        passes++;
+        updatePasses();
+      }
+    });
+
+    function updatePasses() {
+      if (passDisplay) passDisplay.textContent = String(passes);
+      if (companionField) {
+        if (passes > 1) {
+          companionField.classList.remove('hidden');
+        } else {
+          companionField.classList.add('hidden');
+        }
+      }
+    }
+
+    // Diet chips selection
+    const dietChips = document.querySelectorAll('.diet-chip');
+    dietChips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const val = chip.getAttribute('data-value') || '';
+        if (val === 'Estándar') {
+          // If Estándar, clear others
+          dietChips.forEach((c) => {
+            c.classList.remove('bg-[#1C1917]', 'text-white', 'border-[#1C1917]');
+            c.classList.add('bg-[#FDFBF7]', 'text-[#44403C]', 'border-[#E8E3DC]');
+          });
+          chip.classList.add('bg-[#1C1917]', 'text-white', 'border-[#1C1917]');
+          chip.classList.remove('bg-[#FDFBF7]', 'text-[#44403C]', 'border-[#E8E3DC]');
+          selectedDiets = ['Estándar'];
+        } else {
+          // Remove Estándar selection
+          const standardChip = document.querySelector('.diet-chip[data-value="Estándar"]');
+          standardChip?.classList.remove('bg-[#1C1917]', 'text-white', 'border-[#1C1917]');
+          standardChip?.classList.add('bg-[#FDFBF7]', 'text-[#44403C]', 'border-[#E8E3DC]');
+          selectedDiets = selectedDiets.filter((d) => d !== 'Estándar');
+
+          // Toggle this chip
+          if (chip.classList.contains('bg-[#1C1917]')) {
+            chip.classList.remove('bg-[#1C1917]', 'text-white', 'border-[#1C1917]');
+            chip.classList.add('bg-[#FDFBF7]', 'text-[#44403C]', 'border-[#E8E3DC]');
+            selectedDiets = selectedDiets.filter((d) => d !== val);
+            if (selectedDiets.length === 0) {
+              standardChip?.classList.add('bg-[#1C1917]', 'text-white', 'border-[#1C1917]');
+              standardChip?.classList.remove('bg-[#FDFBF7]', 'text-[#44403C]', 'border-[#E8E3DC]');
+              selectedDiets = ['Estándar'];
+            }
+          } else {
+            chip.classList.add('bg-[#1C1917]', 'text-white', 'border-[#1C1917]');
+            chip.classList.remove('bg-[#FDFBF7]', 'text-[#44403C]', 'border-[#E8E3DC]');
+            selectedDiets.push(val);
+          }
+        }
+      });
+    });
+
+    // Step 2 buttons
+    document.getElementById('btn-step2-prev')?.addEventListener('click', () => goToStep(1));
+    document.getElementById('btn-step2-next')?.addEventListener('click', () => goToStep(3));
+
+    // Step 3 buttons
+    document.getElementById('btn-step3-prev')?.addEventListener('click', () => goToStep(2));
+
+    // Submit attending
+    document.getElementById('btn-submit-rsvp')?.addEventListener('click', () => {
+      const companionInput = document.getElementById('companion-name') as HTMLInputElement;
+      const songInput = document.getElementById('dj-song') as HTMLInputElement;
+      const wishesInput = document.getElementById('wishes-note') as HTMLTextAreaElement;
+
+      const rsvpData = {
+        name: guestNameInput?.value.trim(),
+        attendance: 'yes',
+        passes,
+        companion: companionInput ? companionInput.value.trim() : '',
+        diets: selectedDiets,
+        song: songInput ? songInput.value.trim() : '',
+        wishes: wishesInput ? wishesInput.value.trim() : '',
+        confirmedAt: new Date().toISOString(),
+      };
+
+      localStorage.setItem('nelson_mayra_rsvp', JSON.stringify(rsvpData));
+      showSuccessState(rsvpData);
+      triggerConfetti();
+    });
+
+    // Declined buttons
+    document.getElementById('btn-declined-prev')?.addEventListener('click', () => goToStep(1));
+    document.getElementById('btn-declined-submit')?.addEventListener('click', () => {
+      const wishesInput = document.getElementById('declined-wishes') as HTMLTextAreaElement;
+      const rsvpData = {
+        name: guestNameInput?.value.trim(),
+        attendance: 'no',
+        passes: 0,
+        companion: '',
+        diets: [],
+        song: '',
+        wishes: wishesInput ? wishesInput.value.trim() : '',
+        confirmedAt: new Date().toISOString(),
+      };
+
+      localStorage.setItem('nelson_mayra_rsvp', JSON.stringify(rsvpData));
+      showSuccessState(rsvpData);
+    });
+
+    // Reopen editor
+    document.getElementById('btn-edit-rsvp')?.addEventListener('click', () => {
+      goToStep(1);
+    });
+
+    function goToStep(step: number | 'declined') {
+      [step1, step2, step3, stepDeclined, stepSuccess].forEach((s) => s?.classList.add('hidden'));
+      stepHeader?.classList.remove('hidden');
+
+      if (step === 1) {
+        step1?.classList.remove('hidden');
+        if (stepNumberBadge) stepNumberBadge.textContent = '1';
+        if (stepTitleText) stepTitleText.textContent = 'Tu Asistencia';
+        if (stepCounterText) stepCounterText.textContent = 'Paso 1 de 3';
+      } else if (step === 2) {
+        step2?.classList.remove('hidden');
+        if (stepNumberBadge) stepNumberBadge.textContent = '2';
+        if (stepTitleText) stepTitleText.textContent = 'Pases & Menú';
+        if (stepCounterText) stepCounterText.textContent = 'Paso 2 de 3';
+      } else if (step === 3) {
+        step3?.classList.remove('hidden');
+        if (stepNumberBadge) stepNumberBadge.textContent = '3';
+        if (stepTitleText) stepTitleText.textContent = 'Música & Mensaje';
+        if (stepCounterText) stepCounterText.textContent = 'Paso 3 de 3';
+      } else if (step === 'declined') {
+        stepDeclined?.classList.remove('hidden');
+        stepHeader?.classList.add('hidden');
+      }
+    }
+
+    function showSuccessState(data: any) {
+      [step1, step2, step3, stepDeclined].forEach((s) => s?.classList.add('hidden'));
+      stepHeader?.classList.add('hidden');
+      stepSuccess?.classList.remove('hidden');
+
+      const ticketGuest = document.getElementById('ticket-guest-name');
+      const ticketPasses = document.getElementById('ticket-passes');
+      const ticketDiet = document.getElementById('ticket-diet');
+      const successHeadline = document.getElementById('success-headline');
+
+      if (ticketGuest) ticketGuest.textContent = data.name || 'Invitado';
+
+      if (data.attendance === 'no') {
+        if (successHeadline) successHeadline.textContent = '¡Gracias por avisarnos!';
+        if (ticketPasses) ticketPasses.textContent = 'No asiste';
+        if (ticketDiet) ticketDiet.textContent = '-';
+      } else {
+        if (successHeadline) successHeadline.textContent = '¡Nos vemos en la boda!';
+        if (ticketPasses) ticketPasses.textContent = `${data.passes} persona${data.passes > 1 ? 's' : ''}`;
+        if (ticketDiet) ticketDiet.textContent = data.diets && data.diets.length > 0 ? data.diets.join(', ') : 'Estándar';
+      }
+    }
+
+    function triggerConfetti() {
+      // Check prefers-reduced-motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.65 },
+        colors: ['#C5A880', '#1C1917', '#E8E3DC', '#FDFBF7'],
+      });
+    }
+  }
+
+  initRSVP();
+</script>

@@ -1,0 +1,81 @@
+---
+interface Props {
+  targetDate: string; // ISO 8601
+}
+
+const { targetDate } = Astro.props;
+---
+
+<div class="w-full my-6" id="countdown-container" data-target={targetDate}>
+  <div class="grid grid-cols-4 gap-2 text-center max-w-xs mx-auto">
+    <!-- Days -->
+    <div class="bg-white/80 backdrop-blur-xs border border-[#E8E3DC] rounded-xl p-2.5 shadow-xs">
+      <span class="block text-2xl font-serif font-semibold text-[#1C1917] tracking-tight" id="cd-days">--</span>
+      <span class="block text-[10px] uppercase font-sans tracking-widest text-[#6B6560] mt-0.5">Días</span>
+    </div>
+
+    <!-- Hours -->
+    <div class="bg-white/80 backdrop-blur-xs border border-[#E8E3DC] rounded-xl p-2.5 shadow-xs">
+      <span class="block text-2xl font-serif font-semibold text-[#1C1917] tracking-tight" id="cd-hours">--</span>
+      <span class="block text-[10px] uppercase font-sans tracking-widest text-[#6B6560] mt-0.5">Horas</span>
+    </div>
+
+    <!-- Minutes -->
+    <div class="bg-white/80 backdrop-blur-xs border border-[#E8E3DC] rounded-xl p-2.5 shadow-xs">
+      <span class="block text-2xl font-serif font-semibold text-[#1C1917] tracking-tight" id="cd-minutes">--</span>
+      <span class="block text-[10px] uppercase font-sans tracking-widest text-[#6B6560] mt-0.5">Min</span>
+    </div>
+
+    <!-- Seconds -->
+    <div class="bg-white/80 backdrop-blur-xs border border-[#E8E3DC] rounded-xl p-2.5 shadow-xs">
+      <span class="block text-2xl font-serif font-semibold text-[#C5A880] tracking-tight" id="cd-seconds">--</span>
+      <span class="block text-[10px] uppercase font-sans tracking-widest text-[#6B6560] mt-0.5">Seg</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initCountdown() {
+    const container = document.getElementById('countdown-container');
+    if (!container) return;
+
+    const targetIso = container.getAttribute('data-target');
+    if (!targetIso) return;
+
+    const targetTime = new Date(targetIso).getTime();
+
+    const daysEl = document.getElementById('cd-days');
+    const hoursEl = document.getElementById('cd-hours');
+    const minutesEl = document.getElementById('cd-minutes');
+    const secondsEl = document.getElementById('cd-seconds');
+
+    function update() {
+      const now = new Date().getTime();
+      const difference = targetTime - now;
+
+      if (difference <= 0) {
+        if (daysEl) daysEl.textContent = '00';
+        if (hoursEl) hoursEl.textContent = '00';
+        if (minutesEl) minutesEl.textContent = '00';
+        if (secondsEl) secondsEl.textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+      if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+      if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    update();
+    setInterval(update, 1000);
+  }
+
+  // Run on mount
+  initCountdown();
+</script>

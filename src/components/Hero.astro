@@ -1,0 +1,173 @@
+---
+import Countdown from './Countdown.astro';
+import { weddingConfig } from '../config/wedding.config';
+
+const { couple, event, venues } = weddingConfig;
+
+// Precomputed Google Calendar URL
+const gCalDates = '20261121T200000Z/20261122T080000Z'; // UTC approximation
+const gCalDetails = encodeURIComponent(
+  `¡Nos casamos! Ceremonia en ${venues.ceremony.name} (${venues.ceremony.address}) y Fiesta en ${venues.reception.name}.\n\nConfirmá tu asistencia en nuestra web.`
+);
+const gCalLocation = encodeURIComponent(`${venues.ceremony.name}, ${venues.ceremony.address}`);
+const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.calendarTitle)}&dates=${gCalDates}&details=${gCalDetails}&location=${gCalLocation}`;
+---
+
+<header class="relative pt-12 pb-8 px-6 text-center flex flex-col items-center justify-center overflow-hidden border-b border-[#E8E3DC]/60 bg-gradient-to-b from-white/60 via-transparent to-[#F9F6F0]/40">
+  <!-- Monogram Badge -->
+  <div class="inline-flex items-center justify-center w-14 h-14 rounded-full border border-[#C5A880]/60 bg-white/90 shadow-xs mb-6">
+    <span class="font-serif text-lg font-semibold tracking-widest text-[#1C1917]">{couple.initials}</span>
+  </div>
+
+  <!-- Editorial Subtitle -->
+  <p class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium mb-3">
+    Nuestra Boda • {event.dayOfWeek}
+  </p>
+
+  <!-- Couple Names -->
+  <h1 class="font-serif text-5xl sm:text-6xl text-[#1C1917] font-normal leading-[1.05] tracking-tight mb-4">
+    {couple.groom}
+    <span class="block font-serif italic text-4xl text-[#C5A880] my-1 font-light">&</span>
+    {couple.bride}
+  </h1>
+
+  <!-- Hero Photo with Architectural Arch Frame -->
+  <div class="relative w-64 h-80 mx-auto my-5 rounded-t-full overflow-hidden border-2 border-white shadow-xl bg-[#EFE8DE] flex items-center justify-center group">
+    <!-- Stylized Editorial Placeholder / Graphic -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#1C1917]/70 via-transparent to-black/10 z-10"></div>
+    <div class="w-full h-full flex flex-col items-center justify-center text-center p-6 z-0 bg-[#E8E3DC]/60 relative">
+      <svg class="w-16 h-16 text-[#C5A880] mb-3 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+      </svg>
+      <span class="font-serif italic text-2xl text-[#1C1917]/80">Nelson & Mayra</span>
+      <span class="text-[10px] tracking-widest uppercase font-sans text-[#6B6560] mt-1">21 . 11 . 2026</span>
+    </div>
+
+    <!-- Bottom Caption inside Card -->
+    <div class="absolute bottom-3 inset-x-0 text-center z-20">
+      <span class="text-xs font-serif italic text-white/95 tracking-wide">"El amor no se mira, se siente"</span>
+    </div>
+  </div>
+
+  <!-- Date & Location -->
+  <div class="my-2">
+    <p class="font-serif text-2xl text-[#1C1917] tracking-tight">{event.displayDate}</p>
+    <p class="text-xs uppercase tracking-widest text-[#6B6560] font-sans mt-1">{event.city}</p>
+  </div>
+
+  <!-- Countdown Component Island -->
+  <Countdown targetDate={event.dateIso} />
+
+  <!-- Action Buttons: Add to Calendar & Quick RSVP -->
+  <div class="flex flex-col sm:flex-row gap-3 w-full max-w-xs mt-2">
+    <!-- Add to Calendar Button with Dropdown -->
+    <div class="relative w-full" id="cal-dropdown-root">
+      <button
+        type="button"
+        id="cal-toggle-btn"
+        class="w-full h-12 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#C5A880] bg-white text-[#1C1917] text-xs font-sans font-semibold tracking-wider uppercase transition-all duration-200 hover:bg-[#F9F6F0] active:scale-[0.98] shadow-xs cursor-pointer"
+        aria-expanded="false"
+      >
+        <svg class="w-4 h-4 text-[#C5A880]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span>Agendar Fecha</span>
+      </button>
+
+      <!-- Calendar Options Menu -->
+      <div
+        id="cal-menu"
+        class="hidden absolute left-0 right-0 top-14 bg-white border border-[#E8E3DC] rounded-xl shadow-xl p-2 z-30 flex flex-col gap-1 text-left"
+      >
+        <a
+          href={googleCalendarUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-sans text-[#1C1917] hover:bg-[#F9F6F0] transition-colors"
+        >
+          <span class="w-2 h-2 rounded-full bg-[#4285F4]"></span>
+          <span>Google Calendar</span>
+        </a>
+        <button
+          type="button"
+          id="btn-download-ics"
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-sans text-[#1C1917] hover:bg-[#F9F6F0] transition-colors text-left w-full cursor-pointer"
+        >
+          <span class="w-2 h-2 rounded-full bg-[#1C1917]"></span>
+          <span>Apple / Outlook (.ics)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Scroll to RSVP -->
+    <a
+      href="#rsvp"
+      class="w-full h-12 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#1C1917] text-white text-xs font-sans font-semibold tracking-wider uppercase transition-all duration-200 hover:bg-[#332F2C] active:scale-[0.98] shadow-md"
+    >
+      <span>Confirmar Asistencia</span>
+      <svg class="w-3.5 h-3.5 text-[#C5A880]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </a>
+  </div>
+</header>
+
+<script>
+  function setupCalendarDropdown() {
+    const toggleBtn = document.getElementById('cal-toggle-btn');
+    const menu = document.getElementById('cal-menu');
+    const downloadIcsBtn = document.getElementById('btn-download-ics');
+
+    if (!toggleBtn || !menu) return;
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = menu.classList.contains('hidden');
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        menu.classList.add('hidden');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    });
+
+    if (downloadIcsBtn) {
+      downloadIcsBtn.addEventListener('click', () => {
+        const icsContent = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//Nelson & Mayra//Wedding Invitation//ES',
+          'CALSCALE:GREGORIAN',
+          'METHOD:PUBLISH',
+          'BEGIN:VEVENT',
+          'UID:wedding-nelson-mayra-20261121@boda.com',
+          'DTSTAMP:20260923T120000Z',
+          'DTSTART:20261121T200000Z',
+          'DTEND:20261122T080000Z',
+          'SUMMARY:Boda Nelson Montenegro y Mayra Palomino',
+          'DESCRIPTION:Acompáñanos a celebrar nuestra boda. Ceremonia y Recepción.',
+          'LOCATION:Basílica Nuestra Señora de la Merced, Reconquista 207, CABA',
+          'STATUS:CONFIRMED',
+          'END:VEVENT',
+          'END:VCALENDAR',
+        ].join('\r\n');
+
+        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', 'Boda-Nelson-y-Mayra.ics');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    }
+  }
+
+  setupCalendarDropdown();
+</script>

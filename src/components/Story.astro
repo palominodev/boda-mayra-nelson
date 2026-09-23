@@ -1,0 +1,41 @@
+---
+import { weddingConfig } from '../config/wedding.config';
+const { couple } = weddingConfig;
+---
+
+<section class="py-12 px-6 text-center border-b border-[#E8E3DC]/60 relative bg-white/40">
+  <!-- Subtle Ornamental Divider -->
+  <div class="flex items-center justify-center gap-3 mb-6">
+    <span class="w-8 h-[1px] bg-[#C5A880]/50"></span>
+    <span class="font-serif italic text-base text-[#C5A880]">N & M</span>
+    <span class="w-8 h-[1px] bg-[#C5A880]/50"></span>
+  </div>
+
+  <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
+    Nuestra Historia
+  </span>
+
+  <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight mb-5">
+    Un nuevo capítulo comienza
+  </h2>
+
+  <!-- Story Letter -->
+  <div class="max-w-xs mx-auto text-[#1C1917]/85 font-sans text-sm leading-relaxed space-y-4">
+    <p>
+      Hay momentos en la vida que son inolvidables, y compartirlos con quienes más queremos los hace eternos.
+    </p>
+    <p>
+      Después de construir juntos un camino lleno de risas, aventuras y aprendizajes, decidimos dar el paso más importante: unir nuestras vidas y celebrar el amor que nos une.
+    </p>
+    <p class="font-serif italic text-lg text-[#1C1917] pt-2">
+      "Tu presencia es la pieza fundamental para hacer de este día una fiesta inolvidable."
+    </p>
+  </div>
+
+  <!-- Signatures -->
+  <div class="mt-6 flex items-center justify-center gap-6">
+    <span class="font-serif italic text-xl text-[#C5A880]">{couple.groom.split(' ')[0]}</span>
+    <span class="text-xs text-[#6B6560]">&</span>
+    <span class="font-serif italic text-xl text-[#C5A880]">{couple.bride.split(' ')[0]}</span>
+  </div>
+</section>

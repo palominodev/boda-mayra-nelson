@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-warm-bg: #FDFBF7;
+    --color-warm-surface: #F9F6F0;
+    --color-warm-card: #FFFFFF;
+    --color-espresso: #1C1917;
+    --color-muted-text: #6B6560;
+    --color-champagne: #C5A880;
+    --color-champagne-dark: #9A7B4F;
+    --color-border-warm: #E8E3DC;
+    --font-serif: 'Cormorant Garamond', Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+    background-color: var(--color-warm-bg);
+    color: var(--color-espresso);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  /* Safe area insets for iOS devices */
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.font-body {
+  font-family: var(--font-sans);
+}
+
+/* Subtle architectural arch framing */
+.arch-frame {
+  border-radius: 160px 160px 0 0;
+}
+
+/* Custom noise/texture layer for tactile paper feeling */
+.paper-texture {
+  background-image: radial-gradient(rgba(28, 25, 23, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Glassmorphism card for outdoor high contrast */
+.glass-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-warm);
+  box-shadow: 0 4px 20px -2px rgba(28, 25, 23, 0.05);
+}
+
+/* Accessibility: respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
