@@ -41,6 +41,17 @@ All tokens are defined in `src/styles/global.css` and configured for Tailwind CS
 * `.glass-card`: Semi-opaque white card (`rgba(255, 255, 255, 0.94)`) with backdrop blur.
 * `.safe-bottom`: Padding respecting iOS Home Bar (`env(safe-area-inset-bottom)`).
 
+### Image Assets Registry (`public/images/`)
+
+| File Name | Aspect Ratio | Dimensions Role | Target Component & Context |
+| :--- | :--- | :--- | :--- |
+| `hero.jpg` | **3:4** | Vertical Arch Portrait | [`Hero.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Hero.astro) — Main couple editorial entrance portrait |
+| `gallery-proposal.jpg` | **16:9** | Landscape Panorama | [`Gallery.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Gallery.astro) — Item 1: La Propuesta (Bariloche lake & mountains) |
+| `gallery-cafe.jpg` | **1:1** | Square Candid | [`Gallery.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Gallery.astro) — Item 2: Tardes de Café (San Telmo vintage terrace) |
+| `gallery-beach.jpg` | **1:1** | Square Candid | [`Gallery.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Gallery.astro) — Item 3: Viaje a la Costa (Linen beach sunset) |
+| `gallery-botanical.jpg` | **3:4** / **4:3** | Vertical / Balanced | [`Gallery.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Gallery.astro) — Item 4: Nuestro Compromiso (Glasshouse botanical garden) |
+| `venue-reception.jpg` | **4:3** | Interior Landscape | [`Locations.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Locations.astro) — Estancia Bella Vista evening banquet setup |
+
 ---
 
 ## 2. Layouts & Pages
