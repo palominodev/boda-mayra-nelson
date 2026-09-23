@@ -1,0 +1,119 @@
+---
+---
+
+<div class="space-y-6" id="guestbook-module">
+  <!-- Leave a Message Form -->
+  <div class="bg-white border border-[#E8E3DC] rounded-3xl p-5 shadow-xs text-left space-y-4">
+    <div class="flex items-center gap-2.5">
+      <span class="text-xl">💌</span>
+      <div>
+        <h3 class="font-serif text-lg font-semibold text-[#1C1917]">Libro de Firmas Digital</h3>
+        <p class="text-[11px] font-sans text-[#6B6560]">Dejales una dedicatoria que guardarán por siempre.</p>
+      </div>
+    </div>
+
+    <div>
+      <input
+        type="text"
+        id="gb-author"
+        placeholder="Tu Nombre (Ej: Sofía y Martín)"
+        class="w-full h-11 px-3.5 rounded-xl border border-[#E8E3DC] bg-[#FDFBF7] text-xs font-sans text-[#1C1917] focus:outline-hidden focus:border-[#C5A880] mb-2"
+      />
+      <textarea
+        id="gb-message"
+        rows="2"
+        placeholder="Escribí un mensaje o recuerdo con los novios..."
+        class="w-full p-3 rounded-xl border border-[#E8E3DC] bg-[#FDFBF7] text-xs font-sans text-[#1C1917] focus:outline-hidden focus:border-[#C5A880] resize-none"
+      ></textarea>
+    </div>
+
+    <!-- Quick Emoji Reaction Pills -->
+    <div class="flex items-center justify-between gap-1 pt-1">
+      <div class="flex items-center gap-1.5" id="emoji-picker">
+        <button type="button" class="w-8 h-8 rounded-full bg-[#F9F6F0] hover:bg-[#EFE8DE] flex items-center justify-center text-sm cursor-pointer active:scale-95" data-emoji="❤️">❤️</button>
+        <button type="button" class="w-8 h-8 rounded-full bg-[#F9F6F0] hover:bg-[#EFE8DE] flex items-center justify-center text-sm cursor-pointer active:scale-95" data-emoji="🥂">🥂</button>
+        <button type="button" class="w-8 h-8 rounded-full bg-[#F9F6F0] hover:bg-[#EFE8DE] flex items-center justify-center text-sm cursor-pointer active:scale-95" data-emoji="🎉">🎉</button>
+        <button type="button" class="w-8 h-8 rounded-full bg-[#F9F6F0] hover:bg-[#EFE8DE] flex items-center justify-center text-sm cursor-pointer active:scale-95" data-emoji="✨">✨</button>
+      </div>
+
+      <button
+        type="button"
+        id="btn-post-wish"
+        class="px-5 py-2.5 rounded-xl bg-[#1C1917] hover:bg-[#332F2C] text-white text-xs font-sans font-semibold tracking-wider uppercase cursor-pointer transition-transform active:scale-95"
+      >
+        Publicar
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages Stream -->
+  <div class="space-y-3" id="guestbook-feed">
+    <!-- Seed message 1 -->
+    <div class="bg-white rounded-2xl p-4 border border-[#E8E3DC] shadow-xs text-left space-y-1.5">
+      <div class="flex items-center justify-between">
+        <span class="font-serif text-sm font-bold text-[#1C1917]">Tía Silvia & Alberto</span>
+        <span class="text-[10px] text-[#C5A880] font-sans">❤️ Familia</span>
+      </div>
+      <p class="text-xs font-sans text-[#44403C] leading-relaxed">
+        ¡Qué emoción verlos tan felices! Que este amor crezca cada día más. ¡A disfrutar la fiesta!
+      </p>
+    </div>
+
+    <!-- Seed message 2 -->
+    <div class="bg-white rounded-2xl p-4 border border-[#E8E3DC] shadow-xs text-left space-y-1.5">
+      <div class="flex items-center justify-between">
+        <span class="font-serif text-sm font-bold text-[#1C1917]">Mesa 2 - Los Amigos</span>
+        <span class="text-[10px] text-[#C5A880] font-sans">🥂 Amigos</span>
+      </div>
+      <p class="text-xs font-sans text-[#44403C] leading-relaxed">
+        ¡Nelson, qué golazo de tu vida! Mayra una reina. Hoy se baila hasta que salga el sol.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupGuestbook() {
+    const authorInput = document.getElementById('gb-author') as HTMLInputElement;
+    const msgInput = document.getElementById('gb-message') as HTMLTextAreaElement;
+    const postBtn = document.getElementById('btn-post-wish');
+    const feed = document.getElementById('guestbook-feed');
+    const emojiBtns = document.querySelectorAll('#emoji-picker button');
+    let currentEmoji = '❤️';
+
+    emojiBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        currentEmoji = btn.getAttribute('data-emoji') || '❤️';
+        if (msgInput) {
+          msgInput.value += ` ${currentEmoji}`;
+          msgInput.focus();
+        }
+      });
+    });
+
+    postBtn?.addEventListener('click', () => {
+      const author = authorInput?.value.trim() || 'Invitado';
+      const msg = msgInput?.value.trim();
+
+      if (!msg) {
+        msgInput?.focus();
+        return;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'bg-white rounded-2xl p-4 border border-[#C5A880] shadow-md text-left space-y-1.5 animate-fade-in';
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="font-serif text-sm font-bold text-[#1C1917]">${author}</span>
+          <span class="text-[10px] text-emerald-600 font-sans font-bold">¡Recién publicado!</span>
+        </div>
+        <p class="text-xs font-sans text-[#44403C] leading-relaxed">${msg}</p>
+      `;
+
+      feed?.prepend(card);
+      if (msgInput) msgInput.value = '';
+    });
+  }
+
+  setupGuestbook();
+</script>

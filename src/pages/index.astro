@@ -2,10 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Story from '../components/Story.astro';
+import Gallery from '../components/Gallery.astro';
 import Timeline from '../components/Timeline.astro';
 import Locations from '../components/Locations.astro';
+import Lodging from '../components/Lodging.astro';
 import DressCode from '../components/DressCode.astro';
 import Gifts from '../components/Gifts.astro';
+import FAQ from '../components/FAQ.astro';
 import RSVP from '../components/RSVP.astro';
 import Footer from '../components/Footer.astro';
 import FloatingCTA from '../components/FloatingCTA.astro';
@@ -16,6 +19,15 @@ const pageTitle = `${couple.groom} & ${couple.bride} | ${event.dayOfWeek} ${even
 ---
 
 <Layout title={pageTitle}>
+  <!-- Live Day-of Mode Fast Access Banner -->
+  <aside class="bg-[#1C1917] text-white py-2.5 px-4 text-center text-xs font-sans flex items-center justify-center gap-2 border-b border-[#C5A880]/30">
+    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+    <span class="text-white/90">¿Estás en la fiesta?</span>
+    <a href="/en-vivo" class="text-[#C5A880] font-bold underline hover:text-white transition-colors">
+      Modo En Vivo (Fotos, Mesas, WiFi) →
+    </a>
+  </aside>
+
   <main class="w-full flex flex-col">
     <!-- 1. Hero Section with Names, Arch Portrait, Countdown & Add to Calendar -->
     <Hero />
@@ -23,22 +35,31 @@ const pageTitle = `${couple.groom} & ${couple.bride} | ${event.dayOfWeek} ${even
     <!-- 2. Couple Welcome Letter & Story -->
     <Story />
 
-    <!-- 3. Itinerary / Chronological Vertical Timeline -->
+    <!-- 3. Photo Gallery & Engagement Moments -->
+    <Gallery />
+
+    <!-- 4. Itinerary / Chronological Vertical Timeline -->
     <Timeline />
 
-    <!-- 4. Venues & Navigation (Google Maps & Waze Anti-iframe Deep Links) -->
+    <!-- 5. Venues & Navigation (Google Maps & Waze Anti-iframe Deep Links) -->
     <Locations />
 
-    <!-- 5. Dress Code & Terrain/Shoe Guidance -->
+    <!-- 6. Lodging & Hotel Recommendations for Out-of-town Guests -->
+    <Lodging />
+
+    <!-- 7. Dress Code & Terrain/Shoe Guidance -->
     <DressCode />
 
-    <!-- 6. Gifts, Honeymoon & 1-Tap Copyable Bank Details (CBU/Alias) -->
+    <!-- 8. Gifts, Honeymoon & 1-Tap Copyable Bank Details (CBU/Alias) -->
     <Gifts />
 
-    <!-- 7. Interactive 3-Step Micro-Stepper RSVP with Confetti Reward -->
+    <!-- 9. Frequently Asked Questions (FAQ Accordion) -->
+    <FAQ />
+
+    <!-- 10. Interactive 3-Step Micro-Stepper RSVP with Confetti Reward -->
     <RSVP />
 
-    <!-- 8. Footer & Emergency Coordinator Contact -->
+    <!-- 11. Footer & Emergency Coordinator Contact -->
     <Footer />
   </main>
 

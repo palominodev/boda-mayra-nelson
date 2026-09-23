@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import AudioPlayer from '../components/AudioPlayer.astro';
 import { weddingConfig } from '../config/wedding.config';
 
 interface Props {
@@ -20,6 +21,10 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <meta name="theme-color" content="#FDFBF7" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Nelson & Mayra" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO & OpenGraph -->
@@ -39,6 +44,9 @@ const {
     />
   </head>
   <body class="bg-[#FDFBF7] text-[#1C1917] selection:bg-[#C5A880]/30 selection:text-[#1C1917] relative paper-texture min-h-screen">
+    <!-- Ambient Audio Player (Opt-in) -->
+    <AudioPlayer />
+
     <!-- Main content wrapper with mobile-optimized max-width -->
     <div class="relative w-full max-w-md mx-auto min-h-screen shadow-2xl bg-[#FDFBF7] border-x border-[#E8E3DC]/60 overflow-hidden flex flex-col">
       <slot />

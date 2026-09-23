@@ -1,0 +1,99 @@
+---
+---
+
+<div class="space-y-6" id="photowall-module">
+  <!-- Upload Trigger Card -->
+  <div class="bg-white border-2 border-dashed border-[#C5A880] rounded-3xl p-6 text-center shadow-xs">
+    <div class="w-14 h-14 rounded-full bg-[#C5A880]/15 text-[#9A7B4F] flex items-center justify-center mx-auto mb-3 text-2xl">
+      📷
+    </div>
+
+    <h3 class="font-serif text-2xl text-[#1C1917] mb-1">¡Compartí tus Fotos!</h3>
+    <p class="text-xs text-[#6B6560] font-sans leading-relaxed mb-4">
+      Tomá fotos de la fiesta desde tu celular o subí las de tu galería. ¡Aparecerán en la pantalla gigante del salón!
+    </p>
+
+    <!-- Native File Upload with Camera Capture -->
+    <label class="w-full h-12 rounded-xl bg-[#1C1917] hover:bg-[#332F2C] text-white text-xs font-sans font-semibold uppercase tracking-wider shadow-md flex items-center justify-center gap-2 cursor-pointer transition-transform active:scale-95">
+      <svg class="w-4 h-4 text-[#C5A880]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <span>Subir o Tomar Foto</span>
+      <input type="file" id="photo-file-input" accept="image/*" class="sr-only" />
+    </label>
+  </div>
+
+  <!-- Live Stream Grid -->
+  <div>
+    <div class="flex items-center justify-between mb-3 px-1">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        <span class="text-xs font-sans font-bold text-[#1C1917]">Muro en Vivo</span>
+      </div>
+      <span class="text-[10px] text-[#6B6560] font-sans" id="photo-counter">Fotos del evento</span>
+    </div>
+
+    <!-- Live Masonry Container -->
+    <div id="live-photos-container" class="grid grid-cols-2 gap-3">
+      <!-- Default Initial Party Cards -->
+      <div class="bg-white rounded-2xl p-2.5 border border-[#E8E3DC] shadow-xs space-y-2">
+        <div class="w-full h-36 rounded-xl bg-gradient-to-br from-amber-100 to-stone-200 flex items-center justify-center text-3xl">
+          🥂
+        </div>
+        <div class="px-1 text-left">
+          <p class="text-[11px] font-sans font-semibold text-[#1C1917] truncate">¡Primer brindis!</p>
+          <span class="text-[9px] text-[#6B6560] block">Por Valeria (Mesa 4)</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-2.5 border border-[#E8E3DC] shadow-xs space-y-2">
+        <div class="w-full h-36 rounded-xl bg-gradient-to-br from-stone-200 to-amber-50 flex items-center justify-center text-3xl">
+          💐
+        </div>
+        <div class="px-1 text-left">
+          <p class="text-[11px] font-sans font-semibold text-[#1C1917] truncate">La novia hermosa</p>
+          <span class="text-[9px] text-[#6B6560] block">Por Lucas (Mesa 2)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupPhotoWall() {
+    const fileInput = document.getElementById('photo-file-input') as HTMLInputElement;
+    const container = document.getElementById('live-photos-container');
+
+    if (!fileInput || !container) return;
+
+    fileInput.addEventListener('change', (e) => {
+      const file = fileInput.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const imageUrl = event.target?.result as string;
+        addPhotoToWall(imageUrl, 'Foto recién subida', 'Invitado');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function addPhotoToWall(src: string, caption: string, author: string) {
+      const card = document.createElement('div');
+      card.className = 'bg-white rounded-2xl p-2.5 border border-[#C5A880] shadow-md space-y-2 animate-fade-in';
+      card.innerHTML = `
+        <div class="w-full h-36 rounded-xl overflow-hidden bg-stone-100">
+          <img src="${src}" alt="Foto boda" class="w-full h-full object-cover" />
+        </div>
+        <div class="px-1 text-left">
+          <p class="text-[11px] font-sans font-semibold text-[#1C1917] truncate">${caption}</p>
+          <span class="text-[9px] text-[#C5A880] font-bold block">¡Subido hace instantes!</span>
+        </div>
+      `;
+      container?.prepend(card);
+    }
+  }
+
+  setupPhotoWall();
+</script>

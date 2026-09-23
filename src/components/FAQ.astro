@@ -1,0 +1,71 @@
+---
+import { weddingConfig } from '../config/wedding.config';
+const { faqs } = weddingConfig;
+---
+
+<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-[#FDFBF7]" id="faq">
+  <div class="text-center mb-8">
+    <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
+      Dudas Frecuentes
+    </span>
+    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
+      Preguntas & Respuestas
+    </h2>
+  </div>
+
+  <div class="space-y-3 max-w-xs mx-auto text-left">
+    {faqs.map((faq, idx) => (
+      <div class="bg-white border border-[#E8E3DC] rounded-xl overflow-hidden shadow-xs">
+        <button
+          type="button"
+          class="faq-btn w-full p-4 flex items-center justify-between gap-3 text-left font-serif text-sm font-semibold text-[#1C1917] hover:bg-[#F9F6F0] transition-colors cursor-pointer"
+          data-faq-idx={idx}
+          aria-expanded="false"
+        >
+          <span>{faq.question}</span>
+          <span class="faq-icon text-[#C5A880] text-lg font-mono transition-transform duration-200">+</span>
+        </button>
+
+        <div class="faq-content hidden px-4 pb-4 pt-1 text-xs font-sans text-[#6B6560] leading-relaxed border-t border-[#E8E3DC]/40">
+          <p>{faq.answer}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  function setupFAQ() {
+    const buttons = document.querySelectorAll('.faq-btn');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('.faq-icon');
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+        // Close all other FAQs
+        buttons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute('aria-expanded', 'false');
+            otherBtn.nextElementSibling?.classList.add('hidden');
+            const otherIcon = otherBtn.querySelector('.faq-icon');
+            if (otherIcon) otherIcon.textContent = '+';
+          }
+        });
+
+        if (isExpanded) {
+          btn.setAttribute('aria-expanded', 'false');
+          content?.classList.add('hidden');
+          if (icon) icon.textContent = '+';
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          content?.classList.remove('hidden');
+          if (icon) icon.textContent = '−';
+        }
+      });
+    });
+  }
+
+  setupFAQ();
+</script>

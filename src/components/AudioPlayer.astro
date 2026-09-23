@@ -1,0 +1,99 @@
+---
+---
+
+<div
+  id="ambient-audio-player"
+  class="fixed top-4 right-4 z-40 flex items-center gap-2 bg-white/90 backdrop-blur-md border border-[#E8E3DC] rounded-full pl-3 pr-4 py-1.5 shadow-sm transition-transform active:scale-95"
+>
+  <button
+    type="button"
+    id="audio-toggle-btn"
+    class="flex items-center gap-2 text-[#1C1917] hover:text-[#9A7B4F] cursor-pointer text-xs font-sans font-medium"
+    aria-label="Reproducir música ambiental"
+  >
+    <!-- Visualizer / Soundwave icon -->
+    <div class="flex items-end gap-0.5 h-3.5 w-3.5" id="audio-visualizer">
+      <span class="w-0.5 h-1.5 bg-[#C5A880] rounded-full transition-all"></span>
+      <span class="w-0.5 h-3 bg-[#C5A880] rounded-full transition-all"></span>
+      <span class="w-0.5 h-2 bg-[#C5A880] rounded-full transition-all"></span>
+    </div>
+    <span id="audio-status-text" class="text-[11px] font-sans text-[#6B6560]">Música</span>
+  </button>
+</div>
+
+<script>
+  function setupAudio() {
+    const btn = document.getElementById('audio-toggle-btn');
+    const visualizer = document.getElementById('audio-visualizer');
+    const text = document.getElementById('audio-status-text');
+    let isPlaying = false;
+    let audioContext: AudioContext | null = null;
+    let osc1: OscillatorNode | null = null;
+    let osc2: OscillatorNode | null = null;
+    let gainNode: GainNode | null = null;
+
+    if (!btn || !visualizer || !text) return;
+
+    btn.addEventListener('click', () => {
+      if (!isPlaying) {
+        startGentleAudio();
+      } else {
+        stopAudio();
+      }
+    });
+
+    function startGentleAudio() {
+      try {
+        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+        if (!AudioCtx) return;
+        audioContext = new AudioCtx();
+
+        // Elegant gentle chime chord (A major 7 / romantic drone)
+        osc1 = audioContext.createOscillator();
+        osc2 = audioContext.createOscillator();
+        gainNode = audioContext.createGain();
+
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(440, audioContext.currentTime); // A4
+
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(554.37, audioContext.currentTime); // C#5
+
+        // Warm, very low background volume
+        gainNode.gain.setValueAtTime(0.001, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.04, audioContext.currentTime + 3);
+
+        osc1.connect(gainNode);
+        osc2.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        osc1.start();
+        osc2.start();
+
+        isPlaying = true;
+        visualizer.classList.add('animate-pulse');
+        text.textContent = 'Sonando';
+        text.classList.add('text-[#9A7B4F]');
+      } catch (e) {
+        console.error('Audio initialization:', e);
+      }
+    }
+
+    function stopAudio() {
+      if (gainNode && audioContext) {
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 1);
+        setTimeout(() => {
+          osc1?.stop();
+          osc2?.stop();
+          audioContext?.close();
+        }, 1000);
+      }
+      isPlaying = false;
+      visualizer.classList.remove('animate-pulse');
+      text.textContent = 'Música';
+      text.classList.remove('text-[#9A7B4F]');
+    }
+  }
+
+  setupAudio();
+</script>

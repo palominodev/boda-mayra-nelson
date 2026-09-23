@@ -1,0 +1,17 @@
+{
+  "name": "Boda Nelson & Mayra",
+  "short_name": "Nelson & Mayra",
+  "description": "Invitación oficial y Hub en vivo para la boda de Nelson Montenegro y Mayra Palomino",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDFBF7",
+  "theme_color": "#FDFBF7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

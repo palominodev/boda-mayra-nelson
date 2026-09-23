@@ -1,0 +1,139 @@
+---
+const galleryItems = [
+  {
+    id: 1,
+    title: 'La Propuesta',
+    location: 'Bariloche, Río Negro',
+    aspect: 'aspect-3/4',
+    bg: 'from-amber-100/80 to-stone-200',
+  },
+  {
+    id: 2,
+    title: 'Tardes de Café',
+    location: 'San Telmo, Buenos Aires',
+    aspect: 'aspect-square',
+    bg: 'from-stone-200 to-amber-50',
+  },
+  {
+    id: 3,
+    title: 'Viaje a la Costa',
+    location: 'Mar de las Pampas',
+    aspect: 'aspect-square',
+    bg: 'from-amber-50 to-stone-200',
+  },
+  {
+    id: 4,
+    title: 'Nuestro Compromiso',
+    location: 'Jardín Botánico',
+    aspect: 'aspect-4/5',
+    bg: 'from-stone-200 to-amber-100',
+  },
+];
+---
+
+<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-[#FDFBF7]" id="galeria">
+  <div class="text-center mb-8">
+    <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
+      Momentos Especiales
+    </span>
+    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
+      Nuestra Galería
+    </h2>
+    <p class="text-xs text-[#6B6560] font-sans mt-2 max-w-xs mx-auto">
+      Algunos de los recuerdos más lindos de nuestro camino juntos.
+    </p>
+  </div>
+
+  <!-- Editorial Mosaic Grid -->
+  <div class="grid grid-cols-2 gap-3 max-w-xs mx-auto">
+    {galleryItems.map((item, idx) => (
+      <div
+        class={`group relative rounded-2xl overflow-hidden border border-[#E8E3DC] shadow-xs cursor-pointer bg-gradient-to-br ${item.bg} flex flex-col justify-end p-3 transition-transform duration-300 hover:scale-[1.02] active:scale-98 ${item.aspect} ${idx === 0 ? 'col-span-2 aspect-16/10' : ''}`}
+        data-lightbox-title={item.title}
+        data-lightbox-loc={item.location}
+      >
+        <!-- Decorative Vector Silhouette / Watermark -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+          <svg class="w-16 h-16 text-[#1C1917]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </div>
+
+        <!-- Photo Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+
+        <!-- Caption -->
+        <div class="relative z-20 text-white">
+          <h4 class="font-serif text-sm font-semibold leading-tight">{item.title}</h4>
+          <span class="text-[10px] text-white/80 font-sans block">{item.location}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div
+    id="gallery-lightbox"
+    class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
+  >
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl relative">
+      <button
+        type="button"
+        id="lightbox-close-btn"
+        class="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-100 text-[#1C1917] flex items-center justify-center hover:bg-stone-200 cursor-pointer text-sm font-bold"
+      >
+        ✕
+      </button>
+
+      <div class="w-full h-64 rounded-2xl bg-gradient-to-br from-amber-50 to-stone-200 flex items-center justify-center mb-4 border border-[#E8E3DC]">
+        <svg class="w-20 h-20 text-[#C5A880]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+
+      <h3 id="lightbox-title" class="font-serif text-2xl text-[#1C1917] mb-1">Título</h3>
+      <p id="lightbox-loc" class="text-xs font-sans text-[#6B6560]">Ubicación</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupGallery() {
+    const items = document.querySelectorAll('[data-lightbox-title]');
+    const lightbox = document.getElementById('gallery-lightbox');
+    const closeBtn = document.getElementById('lightbox-close-btn');
+    const titleEl = document.getElementById('lightbox-title');
+    const locEl = document.getElementById('lightbox-loc');
+
+    if (!lightbox) return;
+
+    items.forEach((item) => {
+      item.addEventListener('click', () => {
+        const title = item.getAttribute('data-lightbox-title') || '';
+        const loc = item.getAttribute('data-lightbox-loc') || '';
+
+        if (titleEl) titleEl.textContent = title;
+        if (locEl) locEl.textContent = loc;
+
+        lightbox.classList.remove('hidden');
+        setTimeout(() => {
+          lightbox.classList.remove('opacity-0');
+        }, 10);
+      });
+    });
+
+    function closeLightbox() {
+      lightbox?.classList.add('opacity-0');
+      setTimeout(() => {
+        lightbox?.classList.add('hidden');
+      }, 300);
+    }
+
+    closeBtn?.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
+
+  setupGallery();
+</script>

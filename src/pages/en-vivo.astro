@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PhotoWall from '../components/live/PhotoWall.astro';
+import Guestbook from '../components/live/Guestbook.astro';
+import TableFinder from '../components/live/TableFinder.astro';
+import VenueWifi from '../components/live/VenueWifi.astro';
+import CoupleTrivia from '../components/live/CoupleTrivia.astro';
+import { weddingConfig } from '../config/wedding.config';
+
+const { couple, event } = weddingConfig;
+---
+
+<Layout title={`En Vivo • Boda ${couple.groom} & ${couple.bride}`}>
+  <main class="w-full flex flex-col p-6 min-h-screen">
+    <!-- Header with Live Badge -->
+    <header class="text-center pt-6 pb-6 border-b border-[#E8E3DC]/60 relative">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] uppercase font-sans font-bold tracking-widest mb-3">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        <span>Modo Día de la Boda • En Vivo</span>
+      </div>
+
+      <h1 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal leading-tight">
+        {couple.groom} & {couple.bride}
+      </h1>
+
+      <p class="text-xs font-sans text-[#6B6560] mt-1">
+        ¡Bienvenidos a la fiesta! Participá en vivo desde tu celular.
+      </p>
+
+      <!-- Back to Invitation Link -->
+      <a
+        href="/"
+        class="inline-flex items-center gap-1.5 text-xs font-sans text-[#C5A880] hover:text-[#9A7B4F] mt-3 font-semibold"
+      >
+        <span>← Volver a la Invitación Principal</span>
+      </a>
+    </header>
+
+    <!-- Interactive Navigation Tabs for the Venue -->
+    <nav class="flex items-center justify-between gap-1 bg-[#F9F6F0] p-1.5 rounded-2xl border border-[#E8E3DC] my-6 overflow-x-auto" id="live-tab-bar">
+      <button
+        type="button"
+        class="tab-btn flex-1 py-2 px-2 text-center rounded-xl text-xs font-sans font-semibold text-[#1C1917] bg-white shadow-xs cursor-pointer active:scale-95 transition-all"
+        data-target="tab-fotos"
+      >
+        📷 Fotos
+      </button>
+      <button
+        type="button"
+        class="tab-btn flex-1 py-2 px-2 text-center rounded-xl text-xs font-sans font-semibold text-[#6B6560] cursor-pointer active:scale-95 transition-all hover:text-[#1C1917]"
+        data-target="tab-firmas"
+      >
+        💌 Firmas
+      </button>
+      <button
+        type="button"
+        class="tab-btn flex-1 py-2 px-2 text-center rounded-xl text-xs font-sans font-semibold text-[#6B6560] cursor-pointer active:scale-95 transition-all hover:text-[#1C1917]"
+        data-target="tab-mesas"
+      >
+        🪑 Mesas
+      </button>
+      <button
+        type="button"
+        class="tab-btn flex-1 py-2 px-2 text-center rounded-xl text-xs font-sans font-semibold text-[#6B6560] cursor-pointer active:scale-95 transition-all hover:text-[#1C1917]"
+        data-target="tab-trivia"
+      >
+        🎯 Trivia
+      </button>
+      <button
+        type="button"
+        class="tab-btn flex-1 py-2 px-2 text-center rounded-xl text-xs font-sans font-semibold text-[#6B6560] cursor-pointer active:scale-95 transition-all hover:text-[#1C1917]"
+        data-target="tab-wifi"
+      >
+        📶 WiFi
+      </button>
+    </nav>
+
+    <!-- Tab Panels Container -->
+    <div id="live-tabs-container">
+      <!-- 1. Photos Panel -->
+      <section id="tab-fotos" class="tab-panel">
+        <PhotoWall />
+      </section>
+
+      <!-- 2. Guestbook Panel -->
+      <section id="tab-firmas" class="tab-panel hidden">
+        <Guestbook />
+      </section>
+
+      <!-- 3. Tables Panel -->
+      <section id="tab-mesas" class="tab-panel hidden">
+        <TableFinder />
+      </section>
+
+      <!-- 4. Trivia Panel -->
+      <section id="tab-trivia" class="tab-panel hidden">
+        <CoupleTrivia />
+      </section>
+
+      <!-- 5. WiFi Panel -->
+      <section id="tab-wifi" class="tab-panel hidden">
+        <VenueWifi />
+      </section>
+    </div>
+
+    <!-- Quick Footer Note -->
+    <footer class="mt-auto pt-12 pb-6 text-center text-[11px] font-sans text-[#6B6560]">
+      <p>{couple.hashtag} • ¡Gracias por celebrar con nosotros!</p>
+    </footer>
+  </main>
+</Layout>
+
+<script>
+  function setupLiveTabs() {
+    const tabButtons = document.querySelectorAll('#live-tab-bar .tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        if (!targetId) return;
+
+        // Reset all buttons
+        tabButtons.forEach((b) => {
+          b.classList.remove('bg-white', 'text-[#1C1917]', 'shadow-xs');
+          b.classList.add('text-[#6B6560]');
+        });
+
+        // Highlight active button
+        btn.classList.add('bg-white', 'text-[#1C1917]', 'shadow-xs');
+        btn.classList.remove('text-[#6B6560]');
+
+        // Switch panels
+        tabPanels.forEach((panel) => {
+          if (panel.id === targetId) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  setupLiveTabs();
+</script>

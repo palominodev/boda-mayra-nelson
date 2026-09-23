@@ -1,0 +1,134 @@
+---
+import { weddingConfig } from '../../config/wedding.config';
+const { trivia } = weddingConfig;
+---
+
+<div class="space-y-6" id="trivia-module">
+  <!-- Trivia Header -->
+  <div class="bg-white border border-[#E8E3DC] rounded-3xl p-5 shadow-xs text-left space-y-3">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-lg">
+        🎯
+      </div>
+      <div>
+        <h3 class="font-serif text-lg font-semibold text-[#1C1917]">Trivia de los Novios</h3>
+        <p class="text-[11px] font-sans text-[#6B6560]">¿Cuánto conocés a Nelson y Mayra? ¡Jugá desde tu mesa!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Questions Carousel / List -->
+  <div class="space-y-4" id="trivia-questions-container">
+    {trivia.map((q, idx) => (
+      <div class="bg-white border border-[#E8E3DC] rounded-2xl p-5 shadow-xs text-left space-y-3 trivia-card" data-correct={q.correctIndex}>
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] uppercase font-sans font-bold text-[#C5A880]">Pregunta {idx + 1} de {trivia.length}</span>
+        </div>
+
+        <h4 class="font-serif text-base font-semibold text-[#1C1917] leading-snug">
+          {q.question}
+        </h4>
+
+        <!-- Options -->
+        <div class="space-y-2">
+          {q.options.map((opt, optIdx) => (
+            <button
+              type="button"
+              class="trivia-option w-full p-3 rounded-xl border border-[#E8E3DC] bg-[#FDFBF7] hover:bg-[#F9F6F0] text-xs font-sans text-[#1C1917] text-left flex items-center justify-between transition-colors cursor-pointer"
+              data-opt-idx={optIdx}
+            >
+              <span>{opt}</span>
+              <span class="status-icon text-sm"></span>
+            </button>
+          ))}
+        </div>
+
+        <!-- Fun Fact (Hidden until answered) -->
+        <div class="trivia-fun-fact hidden bg-amber-50/70 border border-amber-200/60 p-3 rounded-xl text-xs font-sans text-amber-950">
+          <span class="font-bold block mb-0.5">💡 ¿Sabías qué?</span>
+          <span>{q.funFact}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Final Score Summary (Hidden initially) -->
+  <div id="trivia-score-box" class="hidden bg-white border-2 border-[#C5A880] rounded-3xl p-6 text-center shadow-lg space-y-3 animate-fade-in">
+    <div class="text-3xl">🏆</div>
+    <h3 class="font-serif text-2xl text-[#1C1917]">¡Juego Completado!</h3>
+    <p class="text-xs font-sans text-[#6B6560]">
+      Tu puntaje final es: <span id="final-score-display" class="font-bold text-[#C5A880] text-base">0 / 4</span>
+    </p>
+    <p class="text-[11px] font-sans text-[#44403C] italic">
+      ¡Compartí tu puntaje con tus compañeros de mesa y brindemos por los novios!
+    </p>
+  </div>
+</div>
+
+<script>
+  import confetti from 'canvas-confetti';
+
+  function setupTrivia() {
+    const cards = document.querySelectorAll('.trivia-card');
+    const scoreBox = document.getElementById('trivia-score-box');
+    const scoreDisplay = document.getElementById('final-score-display');
+    let answeredCount = 0;
+    let correctCount = 0;
+
+    cards.forEach((card) => {
+      const correctIdx = parseInt(card.getAttribute('data-correct') || '0', 10);
+      const options = card.querySelectorAll('.trivia-option');
+      const funFact = card.querySelector('.trivia-fun-fact');
+      let cardAnswered = false;
+
+      options.forEach((opt) => {
+        opt.addEventListener('click', () => {
+          if (cardAnswered) return;
+          cardAnswered = true;
+          answeredCount++;
+
+          const selectedIdx = parseInt(opt.getAttribute('data-opt-idx') || '0', 10);
+
+          if (selectedIdx === correctIdx) {
+            correctCount++;
+            opt.classList.remove('bg-[#FDFBF7]', 'border-[#E8E3DC]');
+            opt.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900', 'font-bold');
+            const icon = opt.querySelector('.status-icon');
+            if (icon) icon.textContent = '✅';
+          } else {
+            opt.classList.remove('bg-[#FDFBF7]', 'border-[#E8E3DC]');
+            opt.classList.add('bg-rose-50', 'border-rose-400', 'text-rose-900');
+            const icon = opt.querySelector('.status-icon');
+            if (icon) icon.textContent = '❌';
+
+            // Highlight the correct one
+            const correctOpt = card.querySelector(`[data-opt-idx="${correctIdx}"]`);
+            correctOpt?.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900');
+          }
+
+          // Show fun fact
+          funFact?.classList.remove('hidden');
+
+          // Check if all answered
+          if (answeredCount === cards.length) {
+            if (scoreBox && scoreDisplay) {
+              scoreBox.classList.remove('hidden');
+              scoreDisplay.textContent = `${correctCount} / ${cards.length}`;
+              scoreBox.scrollIntoView({ behavior: 'smooth' });
+
+              if (correctCount >= 3 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                confetti({
+                  particleCount: 60,
+                  spread: 60,
+                  origin: { y: 0.7 },
+                });
+              }
+            }
+          }
+        });
+      });
+    });
+  }
+
+  setupTrivia();
+</script>
