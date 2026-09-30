@@ -1,0 +1,94 @@
+# Landing Redesign (Inspo-guided)
+
+## Objective and why
+
+Redesign the visual language of the main invitation landing (`src/pages/index.astro` and its section components) using real production references studied through the Inspo MCP. The current page is a competent champagne-on-linen template with hardcoded hex colors repeated across every component; the goal is a more distinctive, editorial "hospitality letter" feel, and centralized design tokens so future visual changes are one-place edits.
+
+## Product decisions (user-owned)
+
+- Desktop keeps the phone-column format (`max-w-md` invitation-in-a-phone). Only the visual style inside that column is redesigned. (User answer, 2026-09-30.)
+- Content, copy, section order, and behavior stay as they are. This is a visual redesign, not a content or feature change.
+
+## Inspo study (evidence)
+
+Calls: one `recommend` (wedding brief, light/luxe/warm) and one `search_screens` (roman-serif, light paper, warm accent). E-commerce/SaaS hits discarded. References kept:
+
+- `mirazur-fr--en-reservation-html` (hospitality): muted ground, giant centered high-contrast serif wordmark with a tiny ornament as the only decoration, all-caps light serif display vs. sentence-case sans body, extreme scale contrast.
+- `contralabs-com`: sepia paper, elegant serif, a single framed image with corner registration marks, airy composition.
+- `buly1803-com`: warm brown ink (#74412a) on dusty rose, all-caps widely tracked serif display, flat rectangular CTA.
+- `synthesis-partners--recent-work`: soft oversized serif on cream (#fdfaf6), hairline rules, deep red-brown accent.
+
+Inspo guidance applied: hero complete in the first viewport; one vertical rhythm at every section seam; copy in a padded column (24px min inline padding); take composition, not rule-breaking.
+
+## Design direction
+
+- **Paper:** warm ivory `#F4EFE7`; alternate section ground `#EBE3D7`; card surface `#FBF8F3`.
+- **Ink:** `#2B211C` (primary), `#6A5D54` (secondary, must keep ≥4.5:1 on paper).
+- **Accent (single):** rosewood `#8A4B3E` for rules, numerals, links, and primary CTAs; hover/pressed `#6E3A2F`.
+- **Lines:** hairline `#D8CEC1`.
+- **Type:** display stays Cormorant Garamond, used two ways: all-caps light with wide tracking for section titles (Mirazur/Buly), italic for names and pull quotes. Body moves from Plus Jakarta Sans to Jost (geometric sans that pairs with classical serifs).
+- **Signatures:** giant centered monogram/wordmark in the hero with a small ornament; roman-numeral section labels (`I · Nuestra historia`) over tracked caps titles; photos framed with corner registration marks instead of the arch; flat rectangular CTAs; hairline dividers instead of shadows and glass.
+- **Rhythm:** one vertical section rhythm (about 80px on the column), 24px inline padding.
+
+## Scope and constraints
+
+- Tokens live in `src/styles/global.css` via Tailwind v4 `@theme` (for example `bg-paper`, `text-ink`, `text-accent`, `border-line`) so components stop hardcoding hex values. Existing CSS variables stay as-is to avoid breaking other pages.
+- `Layout.astro` is shared with `/en-vivo` and admin pages: limit changes to the font stylesheet link and non-breaking token additions. The landing applies its own ground inside `index.astro`, so `/en-vivo` keeps its current look.
+- **Excluded:** `src/components/RSVP.astro` carries uncommitted invitation-dashboard work. Editing or committing it here would sweep that work into this branch. Its restyle is deferred until that work is committed. It must still render correctly next to the new sections.
+- Preserve every script hook: ids, `data-*` attributes, and classes queried by client scripts (countdown, lightbox, copy-to-clipboard, FAQ accordion, floating CTA visibility, audio player).
+- Accessibility: text contrast ≥4.5:1, visible focus states, touch targets ≥44px, `prefers-reduced-motion` respected.
+- Artifacts (code, comments, docs) in English; user-facing copy stays in its existing Spanish.
+- TDD mode: off, source `openspec/config.yaml` (`strict_tdd: false`). No behavior changes are planned, so the checks are functional: `pnpm build` plus a visual check at 390px and 1280px widths.
+- Route: delegated-direct, one writer (12+ non-trivial component files; reading prepares the write). Commits stage only this feature's files, never the unrelated uncommitted work.
+- Forecast: about 900–1300 authored changed lines across T1–T5. Delivery strategy: ask-on-risk. The chain strategy is asked before any PR is created; push and PR stay the user's decisions.
+
+## Tasks
+
+### T1. Tokens, fonts, and landing shell
+
+Status: completed. Route: delegated writer.
+
+Add `@theme` tokens and Jost to `global.css` and the Layout font link; add the corner-frame utility; restyle the top live-mode banner and the landing ground in `index.astro`.
+Acceptance: `pnpm build` passes; `/en-vivo` is visually unchanged apart from the body font.
+
+### T2. Hero, Countdown, Story
+
+Status: pending. Route: delegated writer.
+
+Hero with the giant monogram and ornament, framed portrait, and hero complete in the first viewport. Countdown restyled with the same script hooks. Story as a letter with an italic pull quote.
+Acceptance: build passes; the countdown still ticks.
+
+### T3. Gallery, Timeline, Locations
+
+Status: pending. Route: delegated writer.
+
+Acceptance: build passes; the lightbox still opens and closes; map deep links are unchanged.
+
+### T4. Lodging, DressCode, Gifts, FAQ
+
+Status: pending. Route: delegated writer.
+
+Acceptance: build passes; copy buttons and the FAQ accordion still work.
+
+### T5. Footer, FloatingCTA, and docs
+
+Status: pending. Route: delegated writer.
+
+Update `INDEX_UI.md` tokens and typography to the new system.
+Acceptance: build passes; the floating CTA still hides at the RSVP section.
+
+### T6. Visual verification
+
+Status: pending. Route: parent plus per-action worker.
+
+Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment, and review under RDD.
+
+## Progress and evidence
+
+- 2026-09-30: Inspo installed at project scope (`.mcp.json`). Study done. Branch `feat/landing-redesign` created from `main`, carrying the unrelated uncommitted work unstaged.
+
+- T1 (completed): `@theme static` tokens (paper, paper-alt, card, ink, ink-soft, accent, accent-strong, accent-soft, line, font-display, font-body), Jost added to the Layout font link (Plus Jakarta Sans kept: `font-sans` on /en-vivo and admin still resolves to it), `.landing` scoped ground (remaps `--font-sans` to Jost, focus-visible ring, selection), `.frame-marks` corner-mark utility, restyled live-mode banner. Legacy `.font-display`/`.font-body` rules removed (same family / unused elsewhere; utilities now come from the theme). Commit: COMMIT_T1. `pnpm build`: passed.
+
+## Next step
+
+T2.
