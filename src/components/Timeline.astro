@@ -10,11 +10,11 @@ const { timeline } = weddingConfig;
   <!-- Vertical Timeline Container -->
   <div class="relative max-w-xs mx-auto">
     <!-- Continuous hairline rail -->
-    <div class="absolute left-[5px] top-2 bottom-2 w-px bg-line" aria-hidden="true"></div>
+    <div class="absolute left-[5px] top-2 bottom-2 w-px bg-line" aria-hidden="true" data-reveal="rail"></div>
 
     <div class="space-y-10">
       {timeline.map((item, index) => (
-        <div class="relative pl-9">
+        <div class="relative pl-9" data-reveal>
           <!-- Timeline marker: small rotated square -->
           <span class="absolute left-0 top-1.5 w-[11px] h-[11px] rotate-45 bg-accent ring-4 ring-paper-alt" aria-hidden="true"></span>
 

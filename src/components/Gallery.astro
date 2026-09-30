@@ -50,6 +50,7 @@ const galleryItems = [
     {galleryItems.map((item) => (
       <div
         class={`group cursor-pointer text-left ${item.span}`}
+        data-reveal
         role="button"
         tabindex="0"
         aria-label={`Ver foto: ${item.title}, ${item.location}`}
@@ -62,7 +63,7 @@ const galleryItems = [
           <img
             src={item.src}
             alt={item.title}
-            class="absolute inset-0 w-full h-full object-cover motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-105"
+            class="absolute inset-0 w-full h-full object-cover motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-editorial motion-safe:group-hover:scale-[1.06] motion-safe:group-focus-visible:scale-[1.06]"
             loading="lazy"
           />
         </div>

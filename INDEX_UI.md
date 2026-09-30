@@ -53,6 +53,16 @@ Jost is loaded next to Cormorant Garamond and Plus Jakarta Sans in `Layout.astro
 * Hairlines (`border-line`) replace shadows and glass. Corners are square; buttons are flat rectangles.
 * Animations are wrapped in `motion-safe:` and the global reduced-motion override stays in `global.css`.
 
+### Motion Layer (landing)
+
+Restrained editorial motion, defined in `global.css` and driven by one small inline script at the top of the `.landing` wrapper in `index.astro`. Only `opacity` and `transform` are animated (no layout shift); easing is the `--ease-editorial` token (`ease-editorial` utility), durations 800-1400ms.
+
+* `data-hero` (+ `style="--delay:…ms"`): hero entrance on load (CSS keyframe `landing-rise`, fade + 16px rise, staggered by `--delay`). A `.frame-marks` inside a `data-hero` element also draws its corners in.
+* `data-reveal`: fade + 14px rise once, when the element scrolls into view. Elements entering the viewport together get a 90ms stagger (capped at 4 steps). Put it on wrappers and cards (section headings, letter, gallery tiles, timeline steps, venue/hotel cards, FAQ rows), never on `fixed` layers or on elements that have their own transitions. `data-reveal="rail"` grows a vertical hairline from the top (used by the timeline).
+* Gallery tiles zoom slowly on hover and keyboard focus (`motion-safe:` utilities on the `<img>`); the countdown digits fade/rise when they change (Web Animations API inside the countdown script, ids untouched).
+* Progressive enhancement: hidden initial states only exist under `.landing.motion-ready`, which the script adds on load. Without JS the content is simply visible.
+* Reduced motion: when `prefers-reduced-motion: reduce` matches, the script does not add `motion-ready`, a CSS override forces every `data-hero`/`data-reveal` element visible with no animation or transition, and the countdown skips its digit animation.
+
 ### Image Assets Registry (`public/images/`)
 
 | File Name | Aspect Ratio | Dimensions Role | Target Component & Context |

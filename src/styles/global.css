@@ -17,6 +17,8 @@
   --color-accent-soft: #E3B9AC;
   --color-line: #D8CEC1;
 
+  --ease-editorial: cubic-bezier(0.2, 0.7, 0.2, 1);
+
   --font-display: 'Cormorant Garamond', Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-body: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
@@ -129,8 +131,73 @@
   background-repeat: no-repeat;
 }
 
+/*
+ * Landing motion layer. The hidden initial states only exist once the inline
+ * script in index.astro adds .motion-ready to .landing (and not when the
+ * visitor prefers reduced motion), so the page is fully visible without JS.
+ * Only opacity and transform are animated: no layout shift.
+ */
+@keyframes landing-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+}
+
+@keyframes landing-marks {
+  from {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+
+/* Hero entrance on load; --delay staggers the pieces (set inline). */
+.landing.motion-ready [data-hero] {
+  animation: landing-rise 900ms var(--ease-editorial) var(--delay, 0ms) backwards;
+}
+
+.landing.motion-ready [data-hero] .frame-marks::before {
+  animation: landing-marks 1000ms var(--ease-editorial) 900ms backwards;
+}
+
+/* Scroll reveal once per element; the script sets .is-revealed and a
+   --delay stagger for elements that enter the viewport together. */
+.landing.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 800ms var(--ease-editorial) var(--delay, 0ms),
+    transform 800ms var(--ease-editorial) var(--delay, 0ms);
+}
+
+.landing.motion-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Timeline rail grows from the top instead of fading in. */
+.landing.motion-ready [data-reveal='rail'] {
+  opacity: 1;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1400ms var(--ease-editorial) var(--delay, 0ms);
+}
+
+.landing.motion-ready [data-reveal='rail'].is-revealed {
+  transform: none;
+}
+
 /* Accessibility: respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
+  .landing [data-hero],
+  .landing [data-hero] .frame-marks::before,
+  .landing [data-reveal] {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

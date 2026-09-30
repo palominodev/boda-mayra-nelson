@@ -83,6 +83,17 @@ Status: completed with review unavailable. Route: parent inline.
 
 Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment, and review under RDD.
 
+### T7. Motion layer (user request 2026-09-30: "agrega animaciones")
+
+Status: completed. Route: delegated writer (many component files; reading prepares the write).
+
+Restrained editorial motion that fits the hospitality direction, not flashy:
+- Hero entrance on load: staggered fade/rise of monogram, names, ampersand, portrait, and date; corner marks of `.frame-marks` draw in.
+- Scroll reveal: section headings and content blocks fade and rise once when they enter the viewport, with a small stagger for list items (timeline steps, gallery tiles, cards, FAQ rows). Timeline rail grows as it enters.
+- Micro-interactions: slow image zoom on gallery hover, button and link hover transitions, and a gentle countdown digit change.
+- Implementation: CSS keyframes and transitions plus one small IntersectionObserver script scoped to the landing. No new dependencies. Content must stay visible without JS (the hidden initial state only applies once the script marks the document). Animate only transform and opacity, with no layout shift. Honor `prefers-reduced-motion: reduce` by disabling all of it. Do not touch `RSVP.astro` or break existing script hooks.
+Acceptance: `pnpm build` passes; content is visible with JS disabled and with reduced motion; the reveal fires once per element; there is no horizontal overflow at 390px.
+
 ## Progress and evidence
 
 - 2026-09-30: Inspo installed at project scope (`.mcp.json`). Study done. Branch `feat/landing-redesign` created from `main`, carrying the unrelated uncommitted work unstaged.
@@ -98,6 +109,8 @@ Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment
 - T5 (completed): Footer restyled (monogram ornament, flat coordinator card, accent WhatsApp button, extra bottom padding so the floating CTA never covers the sign-off). FloatingCTA is a flat ink rectangle with `motion-safe` animation; `#floating-rsvp-cta` and the opacity/translate classes toggled by its script are unchanged. `INDEX_UI.md` updated: new tokens, typography, utilities (`.landing`, `.frame-marks`), layout rhythm, `SectionHeading`, and component descriptions. Commit: 90adcf1. `pnpm build`: passed. Browser check at 390px: the CTA is visible while scrolling the page and hidden while the RSVP section is in view; `/en-vivo` still renders with its original look and body font.
 
 - T6 (completed, review unavailable): parent spot check `pnpm build`: passed. Playwright screenshots at 390x844 (fold and full page) and 1280x800: the hero (monogram, names, framed portrait, date, CTA) reads as intended; desktop keeps the phone column. The reception photo looked blank in the full-page capture because of `loading="lazy"`; its markup is unchanged from `main`, so this is a capture artifact. Contrast: ink-soft 4.99–5.99:1, accent 5.23–6.28:1, ink >=12.3:1 across paper, paper-alt and card. Native RDD: `review assess` over `8ae8ab9..HEAD` (18 files, +574/-378) returned `unassessable` (untracked inventory required), so the range was treated as due. The preflight STATUS asked for an intended-untracked selection. The empty selection (all untracked files belong to the invitation-dashboard work) was refused with `invalid_request` ("must be exact ... JSON"). The review was stopped there without a retry loop, so there is no review receipt for this candidate. Known gaps: copy buttons not exercised in a real browser; RSVP keeps its old palette (deferred).
+
+- T7 (completed): motion layer. `global.css`: `--ease-editorial` token, `landing-rise`/`landing-marks` keyframes, `[data-hero]` entrance (stagger via `--delay`), `[data-reveal]` fade + 14px rise, `[data-reveal="rail"]` scaleY growth, reduced-motion override. One `is:inline` script at the top of `.landing` in `index.astro` adds `motion-ready` (skipped for reduced motion) and reveals `[data-reveal]` once via IntersectionObserver (90ms stagger for elements entering together). Hooks added to Hero, Countdown, SectionHeading, Story, Gallery, Timeline, Locations, Lodging, DressCode, Gifts, FAQ, Footer; gallery hover zoom slowed to 1.4s; countdown digits animate on change via Web Animations API (ids and logic unchanged); `INDEX_UI.md` documents the layer. `RSVP.astro` and `Layout.astro` untouched. Checks: `pnpm build`: passed. Playwright at 390x844: below-fold reveal elements start hidden (28 of 29) and all 29 end at opacity 1 after scrolling through; they stay visible when scrolling back up (once only); all 9 hero pieces end at opacity 1 after the entrance; scrollWidth 390 (no horizontal overflow); with `reducedMotion: 'reduce'` all visible immediately, `motion-ready` absent, no transforms; with JavaScript disabled all visible; countdown ticks (48 -> 45); lightbox opens and closes; FAQ toggles; floating CTA hidden at `#rsvp` and shown elsewhere; hover on a gallery tile resolves `scale: 1.06` over 1.4s; no page errors. Commit: pending.
 
 ## Next step
 

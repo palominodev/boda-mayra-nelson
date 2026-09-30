@@ -21,6 +21,44 @@ const pageTitle = `${couple.groom} & ${couple.bride} | ${event.dayOfWeek} ${even
 <Layout title={pageTitle}>
   <!-- Landing ground: paper tokens and body face are scoped to this wrapper so /en-vivo keeps its own look -->
   <div class="landing flex-1 flex flex-col">
+    <!--
+      Motion layer: marks the landing as motion-ready before first paint (so the
+      hero entrance has no flash) and reveals [data-reveal] elements once as
+      they scroll into view. Skipped for reduced motion; without JS the
+      content simply stays visible.
+    -->
+    <script is:inline>
+      (function () {
+        var root = document.currentScript && document.currentScript.parentElement;
+        if (!root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        root.classList.add('motion-ready');
+
+        function init() {
+          var items = root.querySelectorAll('[data-reveal]');
+          if (!('IntersectionObserver' in window)) {
+            items.forEach(function (el) { el.classList.add('is-revealed'); });
+            return;
+          }
+          var observer = new IntersectionObserver(function (entries) {
+            var entering = entries.filter(function (e) { return e.isIntersecting; });
+            // Elements entering together stagger top-to-bottom, left-to-right
+            entering.sort(function (a, b) {
+              return a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left;
+            });
+            entering.forEach(function (entry, i) {
+              entry.target.style.setProperty('--delay', Math.min(i, 4) * 90 + 'ms');
+              entry.target.classList.add('is-revealed');
+              observer.unobserve(entry.target);
+            });
+          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+          items.forEach(function (el) { observer.observe(el); });
+        }
+
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+        else init();
+      })();
+    </script>
+
     <!-- Live Day-of Mode Fast Access Banner -->
     <aside class="bg-ink text-paper pl-6 pr-24 py-1 text-center text-xs font-body tracking-wide flex flex-wrap items-center justify-center gap-x-2 border-b border-accent-soft/30">
       <span class="w-1.5 h-1.5 rounded-full bg-accent-soft motion-safe:animate-ping" aria-hidden="true"></span>

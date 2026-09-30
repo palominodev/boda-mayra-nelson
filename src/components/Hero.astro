@@ -15,32 +15,32 @@ const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TE
 
 <header class="relative pt-8 pb-16 px-6 text-center flex flex-col items-center bg-paper">
   <!-- Ornament: initials between hairlines -->
-  <div class="flex items-center justify-center gap-3 mb-6" aria-hidden="true">
+  <div class="flex items-center justify-center gap-3 mb-6" aria-hidden="true" data-hero style="--delay:0ms">
     <span class="w-10 h-px bg-accent/60"></span>
     <span class="font-display italic text-base text-accent tracking-widest">{couple.initials}</span>
     <span class="w-10 h-px bg-accent/60"></span>
   </div>
 
   <!-- Editorial Subtitle -->
-  <p class="font-body text-[11px] uppercase tracking-[0.3em] text-ink-soft font-medium mb-5">
+  <p class="font-body text-[11px] uppercase tracking-[0.3em] text-ink-soft font-medium mb-5" data-hero style="--delay:100ms">
     Nuestra Boda • {event.dayOfWeek}
   </p>
 
   <!-- Couple Names: giant tracked wordmark, surnames as small caps -->
   <h1 class="font-display uppercase font-light text-ink leading-none flex flex-col items-center">
-    <span class="flex flex-col items-center">
+    <span class="flex flex-col items-center" data-hero style="--delay:220ms">
       <span class="text-[3.5rem] sm:text-6xl tracking-[0.08em] mr-[-0.08em]">{couple.groom.split(' ')[0]}</span>
       <span class="font-body text-[11px] tracking-[0.45em] mr-[-0.45em] text-ink-soft mt-2">{couple.groom.split(' ').slice(1).join(' ')}</span>
     </span>
-    <span class="font-display italic normal-case text-4xl text-accent my-2 font-light">&</span>
-    <span class="flex flex-col items-center">
+    <span class="font-display italic normal-case text-4xl text-accent my-2 font-light" data-hero style="--delay:340ms">&</span>
+    <span class="flex flex-col items-center" data-hero style="--delay:460ms">
       <span class="text-[3.5rem] sm:text-6xl tracking-[0.08em] mr-[-0.08em]">{couple.bride.split(' ')[0]}</span>
       <span class="font-body text-[11px] tracking-[0.45em] mr-[-0.45em] text-ink-soft mt-2">{couple.bride.split(' ').slice(1).join(' ')}</span>
     </span>
   </h1>
 
   <!-- Hero Photo with corner registration marks -->
-  <figure class="mt-8 mb-2 flex flex-col items-center">
+  <figure class="mt-8 mb-2 flex flex-col items-center" data-hero style="--delay:580ms">
     <div class="frame-marks w-44 h-56 group">
       <div class="w-full h-full overflow-hidden bg-paper-alt">
         <img
@@ -56,7 +56,7 @@ const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TE
   </figure>
 
   <!-- Date & Location -->
-  <div class="mt-6">
+  <div class="mt-6" data-hero style="--delay:760ms">
     <p class="font-display italic text-2xl text-ink">{event.displayDate}</p>
     <p class="font-body text-[11px] uppercase tracking-[0.3em] text-ink-soft mt-2">{event.city}</p>
   </div>
@@ -65,7 +65,7 @@ const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TE
   <Countdown targetDate={event.dateIso} />
 
   <!-- Action Buttons: Add to Calendar & Quick RSVP -->
-  <div class="flex flex-col gap-3 w-full max-w-xs">
+  <div class="flex flex-col gap-3 w-full max-w-xs" data-hero style="--delay:920ms">
     <!-- Add to Calendar Button with Dropdown -->
     <div class="relative w-full" id="cal-dropdown-root">
       <button
@@ -108,10 +108,10 @@ const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TE
     <!-- Quick Scroll to RSVP -->
     <a
       href="#rsvp"
-      class="w-full h-12 inline-flex items-center justify-center gap-2 px-5 bg-accent text-paper font-body text-xs font-medium tracking-[0.2em] uppercase transition-colors duration-200 hover:bg-accent-strong"
+      class="group w-full h-12 inline-flex items-center justify-center gap-2 px-5 bg-accent text-paper font-body text-xs font-medium tracking-[0.2em] uppercase transition-colors duration-200 hover:bg-accent-strong"
     >
       <span>Confirmar Asistencia</span>
-      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+      <svg class="w-3.5 h-3.5 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
     </a>

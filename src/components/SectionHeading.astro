@@ -9,7 +9,7 @@ interface Props {
 const { numeral, label, title, intro } = Astro.props;
 ---
 
-<div class="text-center mb-12">
+<div class="text-center mb-12" data-reveal>
   <p class="font-body text-[11px] uppercase tracking-[0.3em] text-accent font-medium mb-4">
     <span aria-hidden="true">{numeral} ·</span> {label}
   </p>

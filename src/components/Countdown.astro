@@ -6,7 +6,7 @@ interface Props {
 const { targetDate } = Astro.props;
 ---
 
-<div class="w-full my-8" id="countdown-container" data-target={targetDate}>
+<div class="w-full my-8" id="countdown-container" data-target={targetDate} data-hero style="--delay:840ms">
   <div class="grid grid-cols-4 text-center max-w-xs mx-auto border-y border-line divide-x divide-line">
     <!-- Days -->
     <div class="py-3">
@@ -49,6 +49,22 @@ const { targetDate } = Astro.props;
     const minutesEl = document.getElementById('cd-minutes');
     const secondsEl = document.getElementById('cd-seconds');
 
+    // Gentle fade/rise when a digit changes; skipped on the first paint and for reduced motion
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function setDigits(el: HTMLElement | null, value: string) {
+      if (!el || el.textContent === value) return;
+      const isFirstPaint = el.textContent === '--';
+      el.textContent = value;
+      if (isFirstPaint || reduceMotion.matches || !el.animate) return;
+      el.animate(
+        [
+          { opacity: 0, transform: 'translateY(4px)' },
+          { opacity: 1, transform: 'translateY(0)' },
+        ],
+        { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' }
+      );
+    }
+
     function update() {
       const now = new Date().getTime();
       const difference = targetTime - now;
@@ -66,10 +82,10 @@ const { targetDate } = Astro.props;
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-      if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-      if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-      if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+      setDigits(daysEl, String(days).padStart(2, '0'));
+      setDigits(hoursEl, String(hours).padStart(2, '0'));
+      setDigits(minutesEl, String(minutes).padStart(2, '0'));
+      setDigits(secondsEl, String(seconds).padStart(2, '0'));
     }
 
     update();
