@@ -79,7 +79,7 @@ Acceptance: build passes; the floating CTA still hides at the RSVP section.
 
 ### T6. Visual verification
 
-Status: pending. Route: parent plus per-action worker.
+Status: completed with review unavailable. Route: parent inline.
 
 Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment, and review under RDD.
 
@@ -95,8 +95,10 @@ Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment
 
 - T4 (completed): Lodging, DressCode, Gifts and FAQ use `SectionHeading` (V to VIII), flat `bg-card`/`border-line` surfaces, outlined badges, accent-filled or accent-outlined 44px buttons. Preserved hooks: `.btn-copy` with `data-copy`/`data-label`, `#alias-val`, `#cbu-val`, `#toast-notification` (+ `#toast-text` and the opacity/translate classes the script toggles, now also `role="status"`), `.faq-btn`/`data-faq-idx`/`aria-expanded`, `.faq-icon`, `.faq-content` with `hidden`. The reserved-colours note no longer uses amber; emerald accents replaced by the accent token. Commit: 53a9a70. `pnpm build`: passed. Browser check at 390px: FAQ accordion opens, swaps `+`/`−` and closes siblings.
 
-- T5 (completed): Footer restyled (monogram ornament, flat coordinator card, accent WhatsApp button, extra bottom padding so the floating CTA never covers the sign-off). FloatingCTA is a flat ink rectangle with `motion-safe` animation; `#floating-rsvp-cta` and the opacity/translate classes toggled by its script are unchanged. `INDEX_UI.md` updated: new tokens, typography, utilities (`.landing`, `.frame-marks`), layout rhythm, `SectionHeading`, and component descriptions. Commit: COMMIT_T5. `pnpm build`: passed. Browser check at 390px: the CTA is visible while scrolling the page and hidden while the RSVP section is in view; `/en-vivo` still renders with its original look and body font.
+- T5 (completed): Footer restyled (monogram ornament, flat coordinator card, accent WhatsApp button, extra bottom padding so the floating CTA never covers the sign-off). FloatingCTA is a flat ink rectangle with `motion-safe` animation; `#floating-rsvp-cta` and the opacity/translate classes toggled by its script are unchanged. `INDEX_UI.md` updated: new tokens, typography, utilities (`.landing`, `.frame-marks`), layout rhythm, `SectionHeading`, and component descriptions. Commit: 90adcf1. `pnpm build`: passed. Browser check at 390px: the CTA is visible while scrolling the page and hidden while the RSVP section is in view; `/en-vivo` still renders with its original look and body font.
+
+- T6 (completed, review unavailable): parent spot check `pnpm build`: passed. Playwright screenshots at 390x844 (fold and full page) and 1280x800: the hero (monogram, names, framed portrait, date, CTA) reads as intended; desktop keeps the phone column. The reception photo looked blank in the full-page capture because of `loading="lazy"`; its markup is unchanged from `main`, so this is a capture artifact. Contrast: ink-soft 4.99–5.99:1, accent 5.23–6.28:1, ink >=12.3:1 across paper, paper-alt and card. Native RDD: `review assess` over `8ae8ab9..HEAD` (18 files, +574/-378) returned `unassessable` (untracked inventory required), so the range was treated as due. The preflight STATUS asked for an intended-untracked selection. The empty selection (all untracked files belong to the invitation-dashboard work) was refused with `invalid_request` ("must be exact ... JSON"). The review was stopped there without a retry loop, so there is no review receipt for this candidate. Known gaps: copy buttons not exercised in a real browser; RSVP keeps its old palette (deferred).
 
 ## Next step
 
-T6 (visual verification at 390px and 1280px, contrast spot-check, per-commit risk assessment). `RSVP.astro` restyle stays deferred until the invitation-dashboard work is committed.
+User decisions: push `feat/landing-redesign` and/or open a PR (chain strategy to be chosen then, since the branch is about 950 changed lines); whether to retry the native review. `RSVP.astro` restyle stays deferred until the invitation-dashboard work is committed.
