@@ -6,30 +6,30 @@ interface Props {
 const { targetDate } = Astro.props;
 ---
 
-<div class="w-full my-6" id="countdown-container" data-target={targetDate}>
-  <div class="grid grid-cols-4 gap-2 text-center max-w-xs mx-auto">
+<div class="w-full my-8" id="countdown-container" data-target={targetDate}>
+  <div class="grid grid-cols-4 text-center max-w-xs mx-auto border-y border-line divide-x divide-line">
     <!-- Days -->
-    <div class="bg-white/80 backdrop-blur-xs border border-[#E8E3DC] rounded-xl p-2.5 shadow-xs">
-      <span class="block text-2xl font-serif font-semibold text-[#1C1917] tracking-tight" id="cd-days">--</span>
-      <span class="block text-[10px] uppercase font-sans tracking-widest text-[#6B6560] mt-0.5">Días</span>
+    <div class="py-3">
+      <span class="block font-display text-4xl font-light text-ink leading-none" id="cd-days">--</span>
+      <span class="block font-body text-[11px] uppercase tracking-[0.2em] text-ink-soft mt-2">Días</span>
     </div>
 
     <!-- Hours -->
-    <div class="bg-white/80 backdrop-blur-xs border border-[#E8E3DC] rounded-xl p-2.5 shadow-xs">
-      <span class="block text-2xl font-serif font-semibold text-[#1C1917] tracking-tight" id="cd-hours">--</span>
-      <span class="block text-[10px] uppercase font-sans tracking-widest text-[#6B6560] mt-0.5">Horas</span>
+    <div class="py-3">
+      <span class="block font-display text-4xl font-light text-ink leading-none" id="cd-hours">--</span>
+      <span class="block font-body text-[11px] uppercase tracking-[0.2em] text-ink-soft mt-2">Horas</span>
     </div>
 
     <!-- Minutes -->
-    <div class="bg-white/80 backdrop-blur-xs border border-[#E8E3DC] rounded-xl p-2.5 shadow-xs">
-      <span class="block text-2xl font-serif font-semibold text-[#1C1917] tracking-tight" id="cd-minutes">--</span>
-      <span class="block text-[10px] uppercase font-sans tracking-widest text-[#6B6560] mt-0.5">Min</span>
+    <div class="py-3">
+      <span class="block font-display text-4xl font-light text-ink leading-none" id="cd-minutes">--</span>
+      <span class="block font-body text-[11px] uppercase tracking-[0.2em] text-ink-soft mt-2">Min</span>
     </div>
 
     <!-- Seconds -->
-    <div class="bg-white/80 backdrop-blur-xs border border-[#E8E3DC] rounded-xl p-2.5 shadow-xs">
-      <span class="block text-2xl font-serif font-semibold text-[#C5A880] tracking-tight" id="cd-seconds">--</span>
-      <span class="block text-[10px] uppercase font-sans tracking-widest text-[#6B6560] mt-0.5">Seg</span>
+    <div class="py-3">
+      <span class="block font-display text-4xl font-light text-accent leading-none" id="cd-seconds">--</span>
+      <span class="block font-body text-[11px] uppercase tracking-[0.2em] text-ink-soft mt-2">Seg</span>
     </div>
   </div>
 </div>

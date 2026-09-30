@@ -1,0 +1,25 @@
+---
+interface Props {
+  numeral: string; // Roman numeral shown in the label, e.g. "II"
+  label: string;
+  title: string;
+  intro?: string;
+}
+
+const { numeral, label, title, intro } = Astro.props;
+---
+
+<div class="text-center mb-12">
+  <p class="font-body text-[11px] uppercase tracking-[0.3em] text-accent font-medium mb-4">
+    <span aria-hidden="true">{numeral} ·</span> {label}
+  </p>
+  <h2 class="font-display text-[1.75rem] sm:text-3xl uppercase font-light tracking-[0.12em] leading-[1.2] text-ink text-balance">
+    {title}
+  </h2>
+  <span class="block w-10 h-px bg-accent mx-auto mt-5" aria-hidden="true"></span>
+  {intro && (
+    <p class="font-body text-sm text-ink-soft leading-relaxed mt-5 max-w-xs mx-auto">
+      {intro}
+    </p>
+  )}
+</div>

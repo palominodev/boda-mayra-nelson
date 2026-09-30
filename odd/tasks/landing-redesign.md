@@ -53,7 +53,7 @@ Acceptance: `pnpm build` passes; `/en-vivo` is visually unchanged apart from the
 
 ### T2. Hero, Countdown, Story
 
-Status: pending. Route: delegated writer.
+Status: completed. Route: delegated writer.
 
 Hero with the giant monogram and ornament, framed portrait, and hero complete in the first viewport. Countdown restyled with the same script hooks. Story as a letter with an italic pull quote.
 Acceptance: build passes; the countdown still ticks.
@@ -87,8 +87,10 @@ Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment
 
 - 2026-09-30: Inspo installed at project scope (`.mcp.json`). Study done. Branch `feat/landing-redesign` created from `main`, carrying the unrelated uncommitted work unstaged.
 
-- T1 (completed): `@theme static` tokens (paper, paper-alt, card, ink, ink-soft, accent, accent-strong, accent-soft, line, font-display, font-body), Jost added to the Layout font link (Plus Jakarta Sans kept: `font-sans` on /en-vivo and admin still resolves to it), `.landing` scoped ground (remaps `--font-sans` to Jost, focus-visible ring, selection), `.frame-marks` corner-mark utility, restyled live-mode banner. Legacy `.font-display`/`.font-body` rules removed (same family / unused elsewhere; utilities now come from the theme). Commit: COMMIT_T1. `pnpm build`: passed.
+- T1 (completed): `@theme static` tokens (paper, paper-alt, card, ink, ink-soft, accent, accent-strong, accent-soft, line, font-display, font-body), Jost added to the Layout font link (Plus Jakarta Sans kept: `font-sans` on /en-vivo and admin still resolves to it), `.landing` scoped ground (remaps `--font-sans` to Jost, focus-visible ring, selection), `.frame-marks` corner-mark utility, restyled live-mode banner. Legacy `.font-display`/`.font-body` rules removed (same family / unused elsewhere; utilities now come from the theme). Commit: 78a6a1e. `pnpm build`: passed.
+
+- T2 (completed): new `SectionHeading.astro` (roman-numeral label, tracked-caps display title, hairline, optional intro; reused by the section components). Hero: giant tracked first-name wordmark with small-caps surnames, `.frame-marks` portrait (arch removed), flat rectangular CTAs, date in italic display. Countdown: hairline-divided numerals, same `#countdown-container`/`data-target`/`#cd-*` hooks (ticks in the browser). Story: letter card with drop cap, italic pull quote, signatures. Preserved hooks: `#cal-dropdown-root`, `#cal-toggle-btn`, `#cal-menu`, `#btn-download-ics`, `#rsvp` link. Live-mode banner got right padding so it clears the fixed audio button. Commit: COMMIT_T2. `pnpm build`: passed. Visual spot check at 390px done.
 
 ## Next step
 
-T2.
+T3.

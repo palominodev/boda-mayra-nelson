@@ -13,61 +13,68 @@ const gCalLocation = encodeURIComponent(`${venues.ceremony.name}, ${venues.cerem
 const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.calendarTitle)}&dates=${gCalDates}&details=${gCalDetails}&location=${gCalLocation}`;
 ---
 
-<header class="relative pt-12 pb-8 px-6 text-center flex flex-col items-center justify-center overflow-hidden border-b border-[#E8E3DC]/60 bg-gradient-to-b from-white/60 via-transparent to-[#F9F6F0]/40">
-  <!-- Monogram Badge -->
-  <div class="inline-flex items-center justify-center w-14 h-14 rounded-full border border-[#C5A880]/60 bg-white/90 shadow-xs mb-6">
-    <span class="font-serif text-lg font-semibold tracking-widest text-[#1C1917]">{couple.initials}</span>
+<header class="relative pt-8 pb-16 px-6 text-center flex flex-col items-center bg-paper">
+  <!-- Ornament: initials between hairlines -->
+  <div class="flex items-center justify-center gap-3 mb-6" aria-hidden="true">
+    <span class="w-10 h-px bg-accent/60"></span>
+    <span class="font-display italic text-base text-accent tracking-widest">{couple.initials}</span>
+    <span class="w-10 h-px bg-accent/60"></span>
   </div>
 
   <!-- Editorial Subtitle -->
-  <p class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium mb-3">
+  <p class="font-body text-[11px] uppercase tracking-[0.3em] text-ink-soft font-medium mb-5">
     Nuestra Boda • {event.dayOfWeek}
   </p>
 
-  <!-- Couple Names -->
-  <h1 class="font-serif text-5xl sm:text-6xl text-[#1C1917] font-normal leading-[1.05] tracking-tight mb-4">
-    {couple.groom}
-    <span class="block font-serif italic text-4xl text-[#C5A880] my-1 font-light">&</span>
-    {couple.bride}
+  <!-- Couple Names: giant tracked wordmark, surnames as small caps -->
+  <h1 class="font-display uppercase font-light text-ink leading-none flex flex-col items-center">
+    <span class="flex flex-col items-center">
+      <span class="text-[3.5rem] sm:text-6xl tracking-[0.08em] mr-[-0.08em]">{couple.groom.split(' ')[0]}</span>
+      <span class="font-body text-[11px] tracking-[0.45em] mr-[-0.45em] text-ink-soft mt-2">{couple.groom.split(' ').slice(1).join(' ')}</span>
+    </span>
+    <span class="font-display italic normal-case text-4xl text-accent my-2 font-light">&</span>
+    <span class="flex flex-col items-center">
+      <span class="text-[3.5rem] sm:text-6xl tracking-[0.08em] mr-[-0.08em]">{couple.bride.split(' ')[0]}</span>
+      <span class="font-body text-[11px] tracking-[0.45em] mr-[-0.45em] text-ink-soft mt-2">{couple.bride.split(' ').slice(1).join(' ')}</span>
+    </span>
   </h1>
 
-  <!-- Hero Photo with Architectural Arch Frame -->
-  <div class="relative w-64 h-80 mx-auto my-5 rounded-t-full overflow-hidden border-2 border-white shadow-xl bg-[#EFE8DE] flex items-center justify-center group">
-    <img
-      src="/images/hero.jpg"
-      alt="Nelson Montenegro y Mayra Palomino"
-      class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 z-10 pointer-events-none"></div>
-
-    <!-- Bottom Caption inside Card -->
-    <div class="absolute bottom-3 inset-x-0 text-center z-20">
-      <span class="text-xs font-serif italic text-white/95 tracking-wide drop-shadow-sm">"El amor no se mira, se siente"</span>
+  <!-- Hero Photo with corner registration marks -->
+  <figure class="mt-8 mb-2 flex flex-col items-center">
+    <div class="frame-marks w-44 h-56 group">
+      <div class="w-full h-full overflow-hidden bg-paper-alt">
+        <img
+          src="/images/hero.jpg"
+          alt="Nelson Montenegro y Mayra Palomino"
+          class="w-full h-full object-cover object-center motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-105"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
     </div>
-  </div>
+    <figcaption class="font-display italic text-lg text-ink-soft mt-5">"El amor no se mira, se siente"</figcaption>
+  </figure>
 
   <!-- Date & Location -->
-  <div class="my-2">
-    <p class="font-serif text-2xl text-[#1C1917] tracking-tight">{event.displayDate}</p>
-    <p class="text-xs uppercase tracking-widest text-[#6B6560] font-sans mt-1">{event.city}</p>
+  <div class="mt-6">
+    <p class="font-display italic text-2xl text-ink">{event.displayDate}</p>
+    <p class="font-body text-[11px] uppercase tracking-[0.3em] text-ink-soft mt-2">{event.city}</p>
   </div>
 
   <!-- Countdown Component Island -->
   <Countdown targetDate={event.dateIso} />
 
   <!-- Action Buttons: Add to Calendar & Quick RSVP -->
-  <div class="flex flex-col sm:flex-row gap-3 w-full max-w-xs mt-2">
+  <div class="flex flex-col gap-3 w-full max-w-xs">
     <!-- Add to Calendar Button with Dropdown -->
     <div class="relative w-full" id="cal-dropdown-root">
       <button
         type="button"
         id="cal-toggle-btn"
-        class="w-full h-12 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#C5A880] bg-white text-[#1C1917] text-xs font-sans font-semibold tracking-wider uppercase transition-all duration-200 hover:bg-[#F9F6F0] active:scale-[0.98] shadow-xs cursor-pointer"
+        class="w-full h-12 inline-flex items-center justify-center gap-2 px-5 border border-accent bg-transparent text-accent font-body text-xs font-medium tracking-[0.2em] uppercase transition-colors duration-200 hover:bg-accent hover:text-paper cursor-pointer"
         aria-expanded="false"
       >
-        <svg class="w-4 h-4 text-[#C5A880]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.6" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
         <span>Agendar Fecha</span>
@@ -76,23 +83,23 @@ const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TE
       <!-- Calendar Options Menu -->
       <div
         id="cal-menu"
-        class="hidden absolute left-0 right-0 top-14 bg-white border border-[#E8E3DC] rounded-xl shadow-xl p-2 z-30 flex flex-col gap-1 text-left"
+        class="hidden absolute left-0 right-0 top-14 bg-card border border-line shadow-md p-1 z-30 flex flex-col text-left"
       >
         <a
           href={googleCalendarUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-sans text-[#1C1917] hover:bg-[#F9F6F0] transition-colors"
+          class="flex items-center gap-3 px-3 min-h-11 font-body text-xs text-ink hover:bg-paper-alt transition-colors"
         >
-          <span class="w-2 h-2 rounded-full bg-[#4285F4]"></span>
+          <span class="w-1.5 h-1.5 bg-accent rotate-45" aria-hidden="true"></span>
           <span>Google Calendar</span>
         </a>
         <button
           type="button"
           id="btn-download-ics"
-          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-sans text-[#1C1917] hover:bg-[#F9F6F0] transition-colors text-left w-full cursor-pointer"
+          class="flex items-center gap-3 px-3 min-h-11 font-body text-xs text-ink hover:bg-paper-alt transition-colors text-left w-full cursor-pointer"
         >
-          <span class="w-2 h-2 rounded-full bg-[#1C1917]"></span>
+          <span class="w-1.5 h-1.5 bg-accent rotate-45" aria-hidden="true"></span>
           <span>Apple / Outlook (.ics)</span>
         </button>
       </div>
@@ -101,10 +108,10 @@ const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TE
     <!-- Quick Scroll to RSVP -->
     <a
       href="#rsvp"
-      class="w-full h-12 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#1C1917] text-white text-xs font-sans font-semibold tracking-wider uppercase transition-all duration-200 hover:bg-[#332F2C] active:scale-[0.98] shadow-md"
+      class="w-full h-12 inline-flex items-center justify-center gap-2 px-5 bg-accent text-paper font-body text-xs font-medium tracking-[0.2em] uppercase transition-colors duration-200 hover:bg-accent-strong"
     >
       <span>Confirmar Asistencia</span>
-      <svg class="w-3.5 h-3.5 text-[#C5A880]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
     </a>
