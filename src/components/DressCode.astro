@@ -1,42 +1,36 @@
 ---
+import SectionHeading from './SectionHeading.astro';
 import { weddingConfig } from '../config/wedding.config';
 const { dressCode } = weddingConfig;
 ---
 
-<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-[#FDFBF7]" id="dresscode">
-  <div class="text-center mb-8">
-    <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
-      Código de Vestimenta
-    </span>
-    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
-      Dress Code
-    </h2>
-  </div>
+<section class="py-20 px-6 relative bg-paper" id="dresscode">
+  <SectionHeading numeral="VI" label="Código de Vestimenta" title="Dress Code" />
 
-  <div class="bg-white border border-[#E8E3DC] rounded-2xl p-6 shadow-xs max-w-xs mx-auto text-center">
+  <div class="bg-card border border-line p-6 max-w-sm mx-auto text-center">
     <!-- Category Badge -->
-    <div class="inline-block px-4 py-1.5 rounded-full bg-[#1C1917] text-white text-xs font-sans font-semibold tracking-wider uppercase mb-4">
+    <div class="inline-block px-4 py-1.5 bg-accent text-paper text-xs font-body font-medium tracking-[0.2em] uppercase mb-5">
       {dressCode.category}
     </div>
 
-    <p class="text-xs text-[#1C1917]/85 font-sans leading-relaxed mb-6">
+    <p class="text-sm text-ink font-body leading-relaxed mb-8">
       {dressCode.description}
     </p>
 
     <!-- Color Swatches -->
-    <div class="mb-6">
-      <span class="text-[11px] font-sans font-medium text-[#6B6560] block mb-3 uppercase tracking-wider">
+    <div class="mb-8">
+      <span class="text-[11px] font-body font-medium text-ink-soft block mb-4 uppercase tracking-[0.2em]">
         Paleta de Inspiración Sugerida
       </span>
-      <div class="flex items-center justify-center gap-3">
+      <div class="flex items-start justify-center gap-3">
         {dressCode.swatches.map((swatch) => (
           <div class="flex flex-col items-center group">
             <div
-              class="w-8 h-8 rounded-full border border-black/10 shadow-xs transition-transform duration-200 group-hover:scale-110"
+              class="w-9 h-9 rounded-full border border-ink/15 motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:scale-110"
               style={`background-color: ${swatch.hex};`}
               title={swatch.name}
             ></div>
-            <span class="text-[9px] font-sans text-[#6B6560] mt-1 max-w-[50px] leading-tight line-clamp-1">
+            <span class="text-[11px] font-body text-ink-soft mt-1.5 max-w-[60px] leading-tight line-clamp-2">
               {swatch.name}
             </span>
           </div>
@@ -45,12 +39,12 @@ const { dressCode } = weddingConfig;
     </div>
 
     <!-- Shoe Advice Notice -->
-    <div class="bg-[#F9F6F0] rounded-xl p-3.5 text-left border border-[#E8E3DC]/70 mb-4">
-      <div class="flex items-start gap-2.5">
-        <span class="text-base">👠</span>
+    <div class="bg-paper p-4 text-left border border-line mb-4">
+      <div class="flex items-start gap-3">
+        <span class="text-base" aria-hidden="true">👠</span>
         <div>
-          <h4 class="text-xs font-sans font-bold text-[#1C1917] mb-0.5">Sugerencia de Calzado</h4>
-          <p class="text-[11px] font-sans text-[#6B6560] leading-relaxed">
+          <h4 class="text-xs font-body font-semibold uppercase tracking-[0.15em] text-ink mb-1">Sugerencia de Calzado</h4>
+          <p class="text-xs font-body text-ink-soft leading-relaxed">
             {dressCode.shoeAdvice}
           </p>
         </div>
@@ -58,12 +52,12 @@ const { dressCode } = weddingConfig;
     </div>
 
     <!-- Reserved Colors Warning -->
-    <div class="bg-amber-50/60 rounded-xl p-3.5 text-left border border-amber-200/50">
-      <div class="flex items-start gap-2.5">
-        <span class="text-base">🤍</span>
+    <div class="bg-paper-alt p-4 text-left border border-line border-l-2 border-l-accent">
+      <div class="flex items-start gap-3">
+        <span class="text-base" aria-hidden="true">🤍</span>
         <div>
-          <h4 class="text-xs font-sans font-bold text-amber-950 mb-0.5">Nota Especial</h4>
-          <p class="text-[11px] font-sans text-amber-900/90 leading-relaxed">
+          <h4 class="text-xs font-body font-semibold uppercase tracking-[0.15em] text-ink mb-1">Nota Especial</h4>
+          <p class="text-xs font-body text-ink-soft leading-relaxed">
             {dressCode.reservedNote}
           </p>
         </div>

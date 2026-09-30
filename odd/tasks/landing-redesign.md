@@ -66,7 +66,7 @@ Acceptance: build passes; the lightbox still opens and closes; map deep links ar
 
 ### T4. Lodging, DressCode, Gifts, FAQ
 
-Status: pending. Route: delegated writer.
+Status: completed. Route: delegated writer.
 
 Acceptance: build passes; copy buttons and the FAQ accordion still work.
 
@@ -91,8 +91,10 @@ Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment
 
 - T2 (completed): new `SectionHeading.astro` (roman-numeral label, tracked-caps display title, hairline, optional intro; reused by the section components). Hero: giant tracked first-name wordmark with small-caps surnames, `.frame-marks` portrait (arch removed), flat rectangular CTAs, date in italic display. Countdown: hairline-divided numerals, same `#countdown-container`/`data-target`/`#cd-*` hooks (ticks in the browser). Story: letter card with drop cap, italic pull quote, signatures. Preserved hooks: `#cal-dropdown-root`, `#cal-toggle-btn`, `#cal-menu`, `#btn-download-ics`, `#rsvp` link. Live-mode banner got right padding so it clears the fixed audio button. Commit: d685cf5. `pnpm build`: passed. Visual spot check at 390px done.
 
-- T3 (completed): Gallery tiles are flat hairline-framed photos with italic captions below; lightbox restyled with the same `data-lightbox-*` attributes and `#gallery-lightbox`, `#lightbox-*` ids. Additive a11y: tiles are `role="button" tabindex="0"` with Enter/Space activation, Escape closes the lightbox, close button is 44px with an aria-label. Timeline: hairline rail, rotated-square markers, caps time labels, no cards. Locations: flat paper cards, outlined badge, reception photo with `.frame-marks`, 44px map buttons; all Google Maps/Waze `href`s unchanged, map icons recoloured to the accent. Commit: COMMIT_T3. `pnpm build`: passed. Browser check at 390px: lightbox opens (click) and closes.
+- T3 (completed): Gallery tiles are flat hairline-framed photos with italic captions below; lightbox restyled with the same `data-lightbox-*` attributes and `#gallery-lightbox`, `#lightbox-*` ids. Additive a11y: tiles are `role="button" tabindex="0"` with Enter/Space activation, Escape closes the lightbox, close button is 44px with an aria-label. Timeline: hairline rail, rotated-square markers, caps time labels, no cards. Locations: flat paper cards, outlined badge, reception photo with `.frame-marks`, 44px map buttons; all Google Maps/Waze `href`s unchanged, map icons recoloured to the accent. Commit: 54fbb07. `pnpm build`: passed. Browser check at 390px: lightbox opens (click) and closes.
+
+- T4 (completed): Lodging, DressCode, Gifts and FAQ use `SectionHeading` (V to VIII), flat `bg-card`/`border-line` surfaces, outlined badges, accent-filled or accent-outlined 44px buttons. Preserved hooks: `.btn-copy` with `data-copy`/`data-label`, `#alias-val`, `#cbu-val`, `#toast-notification` (+ `#toast-text` and the opacity/translate classes the script toggles, now also `role="status"`), `.faq-btn`/`data-faq-idx`/`aria-expanded`, `.faq-icon`, `.faq-content` with `hidden`. The reserved-colours note no longer uses amber; emerald accents replaced by the accent token. Commit: COMMIT_T4. `pnpm build`: passed. Browser check at 390px: FAQ accordion opens, swaps `+`/`−` and closes siblings.
 
 ## Next step
 
-T4.
+T5.

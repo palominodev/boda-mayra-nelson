@@ -1,32 +1,26 @@
 ---
+import SectionHeading from './SectionHeading.astro';
 import { weddingConfig } from '../config/wedding.config';
 const { faqs } = weddingConfig;
 ---
 
-<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-[#FDFBF7]" id="faq">
-  <div class="text-center mb-8">
-    <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
-      Dudas Frecuentes
-    </span>
-    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
-      Preguntas & Respuestas
-    </h2>
-  </div>
+<section class="py-20 px-6 relative bg-paper" id="faq">
+  <SectionHeading numeral="VIII" label="Dudas Frecuentes" title="Preguntas & Respuestas" />
 
-  <div class="space-y-3 max-w-xs mx-auto text-left">
+  <div class="max-w-sm mx-auto text-left border-t border-line">
     {faqs.map((faq, idx) => (
-      <div class="bg-white border border-[#E8E3DC] rounded-xl overflow-hidden shadow-xs">
+      <div class="border-b border-line">
         <button
           type="button"
-          class="faq-btn w-full p-4 flex items-center justify-between gap-3 text-left font-serif text-sm font-semibold text-[#1C1917] hover:bg-[#F9F6F0] transition-colors cursor-pointer"
+          class="faq-btn w-full min-h-14 py-4 flex items-center justify-between gap-4 text-left font-display text-xl font-medium text-ink hover:text-accent transition-colors cursor-pointer"
           data-faq-idx={idx}
           aria-expanded="false"
         >
-          <span>{faq.question}</span>
-          <span class="faq-icon text-[#C5A880] text-lg font-mono transition-transform duration-200">+</span>
+          <span class="leading-snug">{faq.question}</span>
+          <span class="faq-icon text-accent text-xl font-mono shrink-0" aria-hidden="true">+</span>
         </button>
 
-        <div class="faq-content hidden px-4 pb-4 pt-1 text-xs font-sans text-[#6B6560] leading-relaxed border-t border-[#E8E3DC]/40">
+        <div class="faq-content hidden pb-5 text-sm font-body text-ink-soft leading-relaxed">
           <p>{faq.answer}</p>
         </div>
       </div>

@@ -1,50 +1,44 @@
 ---
+import SectionHeading from './SectionHeading.astro';
 import { weddingConfig } from '../config/wedding.config';
 const { gifts } = weddingConfig;
 ---
 
-<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-white/40" id="regalos">
-  <div class="text-center mb-8">
-    <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
-      Mesa de Regalos
-    </span>
-    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
-      Luna de Miel & Presentes
-    </h2>
-  </div>
+<section class="py-20 px-6 relative bg-paper-alt" id="regalos">
+  <SectionHeading numeral="VII" label="Mesa de Regalos" title="Luna de Miel & Presentes" />
 
-  <div class="bg-white border border-[#E8E3DC] rounded-2xl p-6 shadow-xs max-w-xs mx-auto">
-    <div class="w-12 h-12 rounded-full bg-[#C5A880]/15 flex items-center justify-center mx-auto mb-4 text-[#9A7B4F]">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.6">
+  <div class="bg-card border border-line p-6 max-w-sm mx-auto">
+    <div class="w-12 h-12 rounded-full border border-accent/40 flex items-center justify-center mx-auto mb-5 text-accent">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
       </svg>
     </div>
 
-    <p class="text-xs text-[#1C1917]/85 font-sans leading-relaxed text-center mb-6">
+    <p class="text-sm text-ink font-body leading-relaxed text-center mb-8">
       {gifts.message}
     </p>
 
     <!-- Bank Details Card -->
-    <div class="bg-[#F9F6F0] rounded-xl p-4 border border-[#E8E3DC] space-y-3.5 text-left">
+    <div class="bg-paper p-4 border border-line space-y-4 text-left">
       <div>
-        <span class="text-[10px] uppercase font-sans tracking-wider text-[#6B6560] block">Banco & Titular</span>
-        <p class="text-xs font-sans font-bold text-[#1C1917]">{gifts.bank} • {gifts.accountType}</p>
-        <p class="text-xs font-sans text-[#44403C]">{gifts.holder}</p>
+        <span class="text-[11px] uppercase font-body tracking-[0.2em] text-ink-soft block">Banco & Titular</span>
+        <p class="text-sm font-body font-semibold text-ink mt-0.5">{gifts.bank} • {gifts.accountType}</p>
+        <p class="text-sm font-body text-ink">{gifts.holder}</p>
       </div>
 
       <!-- Copyable Alias -->
-      <div class="pt-2 border-t border-[#E8E3DC]/80 flex items-center justify-between gap-2">
+      <div class="pt-3 border-t border-line flex items-center justify-between gap-2">
         <div>
-          <span class="text-[10px] uppercase font-sans tracking-wider text-[#6B6560] block">Alias</span>
-          <span class="text-xs font-mono font-bold text-[#1C1917]" id="alias-val">{gifts.alias}</span>
+          <span class="text-[11px] uppercase font-body tracking-[0.2em] text-ink-soft block">Alias</span>
+          <span class="text-sm font-mono font-bold text-ink" id="alias-val">{gifts.alias}</span>
         </div>
         <button
           type="button"
-          class="btn-copy px-3 py-1.5 rounded-lg bg-white border border-[#C5A880] text-[#9A7B4F] text-xs font-sans font-semibold hover:bg-[#C5A880]/10 transition-colors flex items-center gap-1 active:scale-95 cursor-pointer"
+          class="btn-copy min-h-11 px-4 border border-accent text-accent text-xs font-body font-medium tracking-wide hover:bg-accent hover:text-paper transition-colors flex items-center gap-1.5 cursor-pointer"
           data-copy={gifts.alias}
           data-label="Alias"
         >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
           </svg>
           <span>Copiar</span>
@@ -52,18 +46,18 @@ const { gifts } = weddingConfig;
       </div>
 
       <!-- Copyable CBU -->
-      <div class="pt-2 border-t border-[#E8E3DC]/80 flex items-center justify-between gap-2">
+      <div class="pt-3 border-t border-line flex items-center justify-between gap-2">
         <div class="overflow-hidden">
-          <span class="text-[10px] uppercase font-sans tracking-wider text-[#6B6560] block">CBU</span>
-          <span class="text-[11px] font-mono font-bold text-[#1C1917] block truncate" id="cbu-val">{gifts.cbu}</span>
+          <span class="text-[11px] uppercase font-body tracking-[0.2em] text-ink-soft block">CBU</span>
+          <span class="text-xs font-mono font-bold text-ink block truncate" id="cbu-val">{gifts.cbu}</span>
         </div>
         <button
           type="button"
-          class="btn-copy px-3 py-1.5 rounded-lg bg-white border border-[#C5A880] text-[#9A7B4F] text-xs font-sans font-semibold hover:bg-[#C5A880]/10 transition-colors flex items-center gap-1 shrink-0 active:scale-95 cursor-pointer"
+          class="btn-copy min-h-11 px-4 border border-accent text-accent text-xs font-body font-medium tracking-wide hover:bg-accent hover:text-paper transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
           data-copy={gifts.cbu}
           data-label="CBU"
         >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
           </svg>
           <span>Copiar</span>
@@ -75,9 +69,11 @@ const { gifts } = weddingConfig;
   <!-- Toast Notification Container -->
   <div
     id="toast-notification"
-    class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-[#1C1917] text-white px-5 py-2.5 rounded-full text-xs font-sans shadow-xl flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-ink text-paper px-5 py-2.5 text-xs font-body shadow-xl flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2"
   >
-    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg class="w-4 h-4 text-accent-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
     </svg>
     <span id="toast-text">Copiado al portapapeles</span>

@@ -1,49 +1,45 @@
 ---
+import SectionHeading from './SectionHeading.astro';
 import { weddingConfig } from '../config/wedding.config';
 const { hotels } = weddingConfig;
 ---
 
-<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-white/50" id="hospedaje">
-  <div class="text-center mb-8">
-    <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
-      Estadía & Traslados
-    </span>
-    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
-      Hoteles Recomendados
-    </h2>
-    <p class="text-xs text-[#6B6560] font-sans mt-2 max-w-xs mx-auto">
-      Para mayor comodidad de quienes viajan, gestionamos tarifas especiales en hoteles cercanos:
-    </p>
-  </div>
+<section class="py-20 px-6 relative bg-paper-alt" id="hospedaje">
+  <SectionHeading
+    numeral="V"
+    label="Estadía & Traslados"
+    title="Hoteles Recomendados"
+    intro="Para mayor comodidad de quienes viajan, gestionamos tarifas especiales en hoteles cercanos:"
+  />
 
-  <div class="space-y-4 max-w-xs mx-auto">
+  <div class="space-y-6 max-w-sm mx-auto">
     {hotels.map((hotel) => (
-      <div class="bg-white border border-[#E8E3DC] rounded-2xl p-4 shadow-xs text-left space-y-2">
-        <div class="flex items-start justify-between gap-2">
-          <h3 class="font-serif text-base font-semibold text-[#1C1917] leading-snug">
+      <div class="bg-card border border-line p-5 text-left space-y-3">
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl font-normal text-ink leading-tight">
             {hotel.name}
           </h3>
-          <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-[#C5A880]/15 text-[#9A7B4F] shrink-0">
+          <span class="inline-block px-2 py-0.5 border border-accent/40 text-[11px] font-body font-medium tracking-wider text-accent shrink-0">
             {hotel.distance}
           </span>
         </div>
 
-        <p class="text-[11px] font-sans text-[#44403C]">📍 {hotel.address}</p>
+        <p class="font-body text-sm text-ink">📍 {hotel.address}</p>
 
         {hotel.discountCode && (
-          <div class="bg-[#FDFBF7] p-2.5 rounded-xl border border-[#E8E3DC] flex items-center justify-between text-xs font-sans">
+          <div class="bg-paper p-3 border border-line flex items-center justify-between text-xs font-body">
             <div>
-              <span class="text-[10px] text-[#6B6560] block">Código de descuento:</span>
-              <span class="font-mono font-bold text-[#1C1917]">{hotel.discountCode}</span>
+              <span class="text-[11px] text-ink-soft block">Código de descuento:</span>
+              <span class="font-mono font-bold text-ink">{hotel.discountCode}</span>
             </div>
-            <span class="text-[10px] text-emerald-600 font-bold">Tarifa Boda</span>
+            <span class="text-[11px] uppercase tracking-[0.15em] text-accent font-semibold">Tarifa Boda</span>
           </div>
         )}
 
         <div class="pt-2 flex items-center gap-2">
           <a
             href={`tel:${hotel.phone.replace(/[^0-9+]/g, '')}`}
-            class="flex-1 h-9 rounded-lg border border-[#E8E3DC] text-[#1C1917] hover:bg-[#F9F6F0] flex items-center justify-center gap-1.5 text-xs font-sans font-medium"
+            class="flex-1 h-11 border border-accent text-accent hover:bg-accent hover:text-paper transition-colors flex items-center justify-center gap-1.5 text-xs font-body font-medium tracking-wide"
           >
             <span>📞 Llamar</span>
           </a>
@@ -51,7 +47,7 @@ const { hotels } = weddingConfig;
             href={hotel.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="flex-1 h-9 rounded-lg bg-[#1C1917] text-white hover:bg-[#332F2C] flex items-center justify-center gap-1.5 text-xs font-sans font-medium"
+            class="flex-1 h-11 bg-accent text-paper hover:bg-accent-strong transition-colors flex items-center justify-center gap-1.5 text-xs font-body font-medium tracking-wide"
           >
             <span>Web Hotel</span>
           </a>
