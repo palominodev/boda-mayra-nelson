@@ -72,7 +72,7 @@ Acceptance: build passes; copy buttons and the FAQ accordion still work.
 
 ### T5. Footer, FloatingCTA, and docs
 
-Status: pending. Route: delegated writer.
+Status: completed. Route: delegated writer.
 
 Update `INDEX_UI.md` tokens and typography to the new system.
 Acceptance: build passes; the floating CTA still hides at the RSVP section.
@@ -93,8 +93,10 @@ Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment
 
 - T3 (completed): Gallery tiles are flat hairline-framed photos with italic captions below; lightbox restyled with the same `data-lightbox-*` attributes and `#gallery-lightbox`, `#lightbox-*` ids. Additive a11y: tiles are `role="button" tabindex="0"` with Enter/Space activation, Escape closes the lightbox, close button is 44px with an aria-label. Timeline: hairline rail, rotated-square markers, caps time labels, no cards. Locations: flat paper cards, outlined badge, reception photo with `.frame-marks`, 44px map buttons; all Google Maps/Waze `href`s unchanged, map icons recoloured to the accent. Commit: 54fbb07. `pnpm build`: passed. Browser check at 390px: lightbox opens (click) and closes.
 
-- T4 (completed): Lodging, DressCode, Gifts and FAQ use `SectionHeading` (V to VIII), flat `bg-card`/`border-line` surfaces, outlined badges, accent-filled or accent-outlined 44px buttons. Preserved hooks: `.btn-copy` with `data-copy`/`data-label`, `#alias-val`, `#cbu-val`, `#toast-notification` (+ `#toast-text` and the opacity/translate classes the script toggles, now also `role="status"`), `.faq-btn`/`data-faq-idx`/`aria-expanded`, `.faq-icon`, `.faq-content` with `hidden`. The reserved-colours note no longer uses amber; emerald accents replaced by the accent token. Commit: COMMIT_T4. `pnpm build`: passed. Browser check at 390px: FAQ accordion opens, swaps `+`/`−` and closes siblings.
+- T4 (completed): Lodging, DressCode, Gifts and FAQ use `SectionHeading` (V to VIII), flat `bg-card`/`border-line` surfaces, outlined badges, accent-filled or accent-outlined 44px buttons. Preserved hooks: `.btn-copy` with `data-copy`/`data-label`, `#alias-val`, `#cbu-val`, `#toast-notification` (+ `#toast-text` and the opacity/translate classes the script toggles, now also `role="status"`), `.faq-btn`/`data-faq-idx`/`aria-expanded`, `.faq-icon`, `.faq-content` with `hidden`. The reserved-colours note no longer uses amber; emerald accents replaced by the accent token. Commit: 53a9a70. `pnpm build`: passed. Browser check at 390px: FAQ accordion opens, swaps `+`/`−` and closes siblings.
+
+- T5 (completed): Footer restyled (monogram ornament, flat coordinator card, accent WhatsApp button, extra bottom padding so the floating CTA never covers the sign-off). FloatingCTA is a flat ink rectangle with `motion-safe` animation; `#floating-rsvp-cta` and the opacity/translate classes toggled by its script are unchanged. `INDEX_UI.md` updated: new tokens, typography, utilities (`.landing`, `.frame-marks`), layout rhythm, `SectionHeading`, and component descriptions. Commit: COMMIT_T5. `pnpm build`: passed. Browser check at 390px: the CTA is visible while scrolling the page and hidden while the RSVP section is in view; `/en-vivo` still renders with its original look and body font.
 
 ## Next step
 
-T5.
+T6 (visual verification at 390px and 1280px, contrast spot-check, per-commit risk assessment). `RSVP.astro` restyle stays deferred until the invitation-dashboard work is committed.

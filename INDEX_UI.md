@@ -8,44 +8,56 @@
 
 ## 1. Design Tokens & Styling Primitives
 
-All tokens are defined in `src/styles/global.css` and configured for Tailwind CSS v4.
+All tokens are defined in `src/styles/global.css`. The landing tokens live in a Tailwind CSS v4 `@theme static` block and generate utilities (`bg-paper`, `text-ink`, `border-line`, `font-display`, ...). Components must use these tokens instead of hardcoded hex values.
 
-### Color Palette
+The legacy `:root` variables (`--color-warm-*`, `--color-espresso`, `--color-champagne*`, `--font-serif`, `--font-sans`) are kept for `/en-vivo` and the admin pages, which still use the champagne look. They are not used by the landing.
 
-| Token Role | Hex Code | Tailwind / CSS Variable | Intended Usage & Contrast Rule |
+### Color Palette (landing)
+
+| Token Role | Hex Code | Tailwind Utility / CSS Variable | Intended Usage & Contrast |
 | :--- | :--- | :--- | :--- |
-| **Canvas Background** | `#FDFBF7` | `--color-warm-bg` / `bg-[#FDFBF7]` | Main page background (Warm Linen). Non-reflective in outdoor sunlight. |
-| **Surface / Card** | `#FFFFFF` | `--color-warm-card` / `bg-white` | Elevated content containers, venue cards, forms. |
-| **Soft Surface** | `#F9F6F0` | `--color-warm-surface` / `bg-[#F9F6F0]` | Nested cards, info pills, footer background. |
-| **Primary Text** | `#1C1917` | `--color-espresso` / `text-[#1C1917]` | Headings, titles, data values. Contrast ratio ≥ 7:1 against canvas. |
-| **Secondary Text** | `#6B6560` | `--color-muted-text` / `text-[#6B6560]` | Subtitles, labels, descriptions. Contrast ratio ≥ 4.5:1. |
-| **Accent / Champagne** | `#C5A880` | `--color-champagne` / `text-[#C5A880]` | Monograms, primary CTAs, borders, timeline markers. |
-| **Dark Champagne** | `#9A7B4F` | `--color-champagne-dark` / `text-[#9A7B4F]` | High-contrast interactive states, links, badge text. |
-| **Border Soft** | `#E8E3DC` | `--color-border-warm` / `border-[#E8E3DC]` | 1px dividers, card boundaries, input strokes. |
+| **Paper** | `#F4EFE7` | `bg-paper` / `--color-paper` | Main landing ground (warm ivory). |
+| **Paper Alt** | `#EBE3D7` | `bg-paper-alt` / `--color-paper-alt` | Alternate section ground, footer, reserved notes. |
+| **Card** | `#FBF8F3` | `bg-card` / `--color-card` | Raised surfaces: letter, venue, hotel, gift and dress code cards. |
+| **Ink** | `#2B211C` | `text-ink` / `--color-ink` | Primary text, dark banner and floating CTA ground. 13.7:1 on paper. |
+| **Ink Soft** | `#6A5D54` | `text-ink-soft` / `--color-ink-soft` | Secondary text and labels. 5.0:1 on paper-alt, 5.5:1 on paper. |
+| **Accent** | `#8A4B3E` | `text-accent`, `bg-accent` / `--color-accent` | Rosewood: numerals, rules, links, primary CTAs. 5.8:1 on paper. |
+| **Accent Strong** | `#6E3A2F` | `bg-accent-strong` / `--color-accent-strong` | Hover and pressed state of accent surfaces. |
+| **Accent Soft** | `#E3B9AC` | `text-accent-soft` / `--color-accent-soft` | Accent on dark (ink) grounds only: banner link, floating CTA. |
+| **Line** | `#D8CEC1` | `border-line` / `--color-line` | 1px hairlines: dividers, card and input borders. |
 
-### Typography Scale
+### Typography Scale (landing)
 
 | Hierarchy Role | Font Family | Tailwind Class | Recommended Specs |
 | :--- | :--- | :--- | :--- |
-| **Hero & Couple Names** | `Cormorant Garamond` | `font-serif` / `font-display` | `text-5xl` to `text-6xl`, `font-normal`, `leading-[1.05]` |
-| **Section Headings** | `Cormorant Garamond` | `font-serif` / `font-display` | `text-3xl` to `text-4xl`, `tracking-tight` |
-| **Card & Modal Titles** | `Cormorant Garamond` | `font-serif` / `font-display` | `text-xl` to `text-2xl`, `font-semibold` |
-| **Metadata & Labels** | `Plus Jakarta Sans` | `font-sans` / `font-body` | `text-[10px]` to `text-xs`, `uppercase`, `tracking-[0.2em]`, `font-semibold` |
-| **Body & Form Inputs** | `Plus Jakarta Sans` | `font-sans` / `font-body` | `text-xs` to `text-sm`, `leading-relaxed` |
+| **Hero Wordmark** | `Cormorant Garamond` | `font-display` | `text-[3.5rem]` to `text-6xl`, `uppercase font-light tracking-[0.08em]`, surnames in `font-body` small caps |
+| **Section Headings** | `Cormorant Garamond` | `font-display` | `text-[1.75rem]` to `text-3xl`, `uppercase font-light tracking-[0.12em]` (via `SectionHeading`) |
+| **Card Titles, Names, Pull Quotes** | `Cormorant Garamond` | `font-display` | `text-xl` to `text-2xl`, `font-normal`, `italic` for names and quotes |
+| **Section Label** | `Jost` | `font-body` | `text-[11px]`, `uppercase`, `tracking-[0.3em]`, `text-accent`, prefixed by a roman numeral |
+| **Body & Form Inputs** | `Jost` | `font-body` | `text-sm`, `leading-relaxed`, `text-ink` or `text-ink-soft` |
+| **Buttons** | `Jost` | `font-body` | `text-xs font-medium uppercase tracking-[0.2em]`, flat rectangles, min height 44px |
 | **Monospace / Codes** | System Monospace | `font-mono` | `text-xs`, used for CBU, Alias, Hashtag, and Ticket Codes |
+
+Jost is loaded next to Cormorant Garamond and Plus Jakarta Sans in `Layout.astro`. Plus Jakarta Sans stays because `font-sans` on `/en-vivo` and admin still resolves to it; inside the `.landing` wrapper `--font-sans` is remapped to Jost, so a stray `font-sans` (for example in `RSVP.astro`) also renders in Jost.
 
 ### Utility Classes
 
-* `.paper-texture`: Radial dot pattern creating tactile paper depth without layout shifts.
-* `.arch-frame`: Architectural top arch (`border-radius: 160px 160px 0 0`) for photo framing.
-* `.glass-card`: Semi-opaque white card (`rgba(255, 255, 255, 0.94)`) with backdrop blur.
+* `.landing`: Scoped landing ground (paper background, ink text, Jost body, accent `:focus-visible` ring, rosewood selection). Applied by the wrapper in `index.astro`; never set it on `Layout.astro`.
+* `.frame-marks`: Corner registration marks around a photo (gradient-drawn `::before`, no images). The host must not clip overflow; put the image in an inner `overflow-hidden` element. Tune with `--frame-mark-size`, `--frame-mark-offset`, `--frame-mark-color`.
 * `.safe-bottom`: Padding respecting iOS Home Bar (`env(safe-area-inset-bottom)`).
+* `.paper-texture`, `.glass-card`, `.arch-frame`: Legacy helpers. `Layout.astro` still applies `.paper-texture` to `<body>` (hidden behind the `.landing` ground on the landing); the landing sections no longer use any of the three.
+
+### Layout Rhythm
+
+* One vertical rhythm: sections use `py-20 px-6` (80px block, 24px inline). Grounds alternate `bg-paper` and `bg-paper-alt`.
+* Hairlines (`border-line`) replace shadows and glass. Corners are square; buttons are flat rectangles.
+* Animations are wrapped in `motion-safe:` and the global reduced-motion override stays in `global.css`.
 
 ### Image Assets Registry (`public/images/`)
 
 | File Name | Aspect Ratio | Dimensions Role | Target Component & Context |
 | :--- | :--- | :--- | :--- |
-| `hero.jpg` | **3:4** | Vertical Arch Portrait | [`Hero.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Hero.astro) — Main couple editorial entrance portrait |
+| `hero.jpg` | **3:4** | Vertical Framed Portrait | [`Hero.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Hero.astro) — Main couple editorial entrance portrait |
 | `gallery-proposal.jpg` | **16:9** | Landscape Panorama | [`Gallery.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Gallery.astro) — Item 1: La Propuesta (Bariloche lake & mountains) |
 | `gallery-cafe.jpg` | **1:1** | Square Candid | [`Gallery.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Gallery.astro) — Item 2: Tardes de Café (San Telmo vintage terrace) |
 | `gallery-beach.jpg` | **1:1** | Square Candid | [`Gallery.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Gallery.astro) — Item 3: Viaje a la Costa (Linen beach sunset) |
@@ -59,11 +71,11 @@ All tokens are defined in `src/styles/global.css` and configured for Tailwind CS
 ### `Layout.astro`
 * **File:** [`src/layouts/Layout.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/layouts/Layout.astro)
 * **Role:** Global application shell with PWA manifest, viewport, meta tags, and ambient audio player.
-* **Constraints:** Mobile-first container (`max-w-md mx-auto min-h-screen bg-[#FDFBF7] border-x border-[#E8E3DC]/60`).
+* **Constraints:** Mobile-first container (`max-w-md mx-auto min-h-screen bg-[#FDFBF7] border-x border-[#E8E3DC]/60`). Shared with `/en-vivo` and admin, so it only carries the font link and non-breaking additions; the landing sets its own ground in `index.astro`.
 
 ### `index.astro` (Main Invitation)
 * **File:** [`src/pages/index.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/pages/index.astro)
-* **Role:** Main wedding invitation landing page with top Live Mode banner, all event sections, and floating RSVP action.
+* **Role:** Main wedding invitation landing page with top Live Mode banner, all event sections, and floating RSVP action. Wraps everything in the `.landing` ground.
 
 ### `en-vivo.astro` (Day-of Live Hub)
 * **File:** [`src/pages/en-vivo.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/pages/en-vivo.astro)
@@ -73,9 +85,13 @@ All tokens are defined in `src/styles/global.css` and configured for Tailwind CS
 
 ## 3. Visual & Functional Component Catalog
 
+### 0. `SectionHeading.astro`
+* **File:** [`src/components/SectionHeading.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/SectionHeading.astro)
+* **Purpose:** Shared section header: roman-numeral label (`I · Nuestra Historia`), tracked-caps display title, hairline, optional intro. Props: `numeral`, `label`, `title`, `intro?`. Used by Story through FAQ (I to VIII).
+
 ### 1. `Hero.astro`
 * **File:** [`src/components/Hero.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Hero.astro)
-* **Purpose:** Primary above-the-fold entrance banner with initials, names, date, and "Agendar Fecha" action.
+* **Purpose:** Primary above-the-fold entrance: initials ornament, giant tracked names wordmark, framed portrait (`.frame-marks`), date, countdown, and "Agendar Fecha" / RSVP actions.
 
 ### 2. `Countdown.astro`
 * **File:** [`src/components/Countdown.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Countdown.astro)
@@ -83,7 +99,7 @@ All tokens are defined in `src/styles/global.css` and configured for Tailwind CS
 
 ### 3. `Story.astro`
 * **File:** [`src/components/Story.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Story.astro)
-* **Purpose:** Intimate welcome letter and romantic narrative with ornamental divider and signatures.
+* **Purpose:** Welcome letter card with drop cap, italic pull quote, and signatures.
 
 ### 4. `Gallery.astro`
 * **File:** [`src/components/Gallery.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Gallery.astro)
@@ -91,7 +107,7 @@ All tokens are defined in `src/styles/global.css` and configured for Tailwind CS
 
 ### 5. `Timeline.astro`
 * **File:** [`src/components/Timeline.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Timeline.astro)
-* **Purpose:** Chronological itinerary of the wedding day with vertical gradient rail and milestone cards.
+* **Purpose:** Chronological itinerary of the wedding day with a hairline rail and diamond markers.
 
 ### 6. `Locations.astro`
 * **File:** [`src/components/Locations.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/Locations.astro)
@@ -119,7 +135,7 @@ All tokens are defined in `src/styles/global.css` and configured for Tailwind CS
 
 ### 12. `FloatingCTA.astro`
 * **File:** [`src/components/FloatingCTA.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/FloatingCTA.astro)
-* **Purpose:** Sticky pill button in mobile thumb zone that automatically hides when scrolling into the RSVP section.
+* **Purpose:** Sticky flat rectangular button in mobile thumb zone that automatically hides when scrolling into the RSVP section.
 
 ### 13. `AudioPlayer.astro`
 * **File:** [`src/components/AudioPlayer.astro`](file:///home/palominodev/Proyectos/boda-nelson-mayra/src/components/AudioPlayer.astro)
