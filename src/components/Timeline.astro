@@ -1,48 +1,37 @@
 ---
+import SectionHeading from './SectionHeading.astro';
 import { weddingConfig } from '../config/wedding.config';
 const { timeline } = weddingConfig;
 ---
 
-<section class="py-12 px-6 border-b border-[#E8E3DC]/60 relative bg-[#FDFBF7]" id="itinerario">
-  <div class="text-center mb-10">
-    <span class="text-[11px] uppercase tracking-[0.25em] text-[#6B6560] font-sans font-medium block mb-2">
-      Cronograma del Día
-    </span>
-    <h2 class="font-serif text-3xl sm:text-4xl text-[#1C1917] font-normal tracking-tight">
-      Itinerario de la Celebración
-    </h2>
-  </div>
+<section class="py-20 px-6 relative bg-paper-alt" id="itinerario">
+  <SectionHeading numeral="III" label="Cronograma del Día" title="Itinerario de la Celebración" />
 
   <!-- Vertical Timeline Container -->
-  <div class="relative max-w-xs mx-auto pl-6 sm:pl-8">
-    <!-- Continuous Vertical Line -->
-    <div class="absolute left-2.5 top-3 bottom-3 w-[1px] bg-gradient-to-b from-[#C5A880]/20 via-[#C5A880] to-[#C5A880]/20"></div>
+  <div class="relative max-w-xs mx-auto">
+    <!-- Continuous hairline rail -->
+    <div class="absolute left-[5px] top-2 bottom-2 w-px bg-line" aria-hidden="true"></div>
 
-    <div class="space-y-8">
+    <div class="space-y-10">
       {timeline.map((item, index) => (
-        <div class="relative flex items-start gap-4 group">
-          <!-- Timeline Marker Circle with Icon -->
-          <div class="absolute -left-6 sm:-left-8 top-0.5 w-6 h-6 rounded-full bg-white border border-[#C5A880] flex items-center justify-center shadow-xs z-10">
-            <span class="w-2 h-2 rounded-full bg-[#C5A880]"></span>
+        <div class="relative pl-9">
+          <!-- Timeline marker: small rotated square -->
+          <span class="absolute left-0 top-1.5 w-[11px] h-[11px] rotate-45 bg-accent ring-4 ring-paper-alt" aria-hidden="true"></span>
+
+          <div class="flex items-baseline justify-between gap-2 mb-1">
+            <span class="font-body text-xs font-medium tracking-[0.2em] text-accent uppercase">
+              {item.time} HS
+            </span>
+            <span class="font-body text-[11px] text-ink-soft">Paso {index + 1}</span>
           </div>
 
-          <!-- Content Card -->
-          <div class="w-full bg-white/90 border border-[#E8E3DC] rounded-xl p-4 shadow-xs transition-transform duration-200 hover:-translate-y-0.5">
-            <div class="flex items-baseline justify-between gap-2 mb-1">
-              <span class="text-xs font-sans font-bold tracking-wider text-[#C5A880] uppercase">
-                {item.time} HS
-              </span>
-              <span class="text-[10px] text-[#6B6560] font-sans">Paso {index + 1}</span>
-            </div>
+          <h3 class="font-display text-2xl font-normal text-ink leading-snug mb-1">
+            {item.title}
+          </h3>
 
-            <h3 class="font-serif text-lg font-semibold text-[#1C1917] leading-snug mb-1">
-              {item.title}
-            </h3>
-
-            <p class="text-xs font-sans text-[#6B6560] leading-relaxed">
-              {item.description}
-            </p>
-          </div>
+          <p class="font-body text-sm text-ink-soft leading-relaxed">
+            {item.description}
+          </p>
         </div>
       ))}
     </div>

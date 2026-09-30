@@ -60,7 +60,7 @@ Acceptance: build passes; the countdown still ticks.
 
 ### T3. Gallery, Timeline, Locations
 
-Status: pending. Route: delegated writer.
+Status: completed. Route: delegated writer.
 
 Acceptance: build passes; the lightbox still opens and closes; map deep links are unchanged.
 
@@ -89,8 +89,10 @@ Screenshots at 390px and 1280px, contrast spot-check, per-commit risk assessment
 
 - T1 (completed): `@theme static` tokens (paper, paper-alt, card, ink, ink-soft, accent, accent-strong, accent-soft, line, font-display, font-body), Jost added to the Layout font link (Plus Jakarta Sans kept: `font-sans` on /en-vivo and admin still resolves to it), `.landing` scoped ground (remaps `--font-sans` to Jost, focus-visible ring, selection), `.frame-marks` corner-mark utility, restyled live-mode banner. Legacy `.font-display`/`.font-body` rules removed (same family / unused elsewhere; utilities now come from the theme). Commit: 78a6a1e. `pnpm build`: passed.
 
-- T2 (completed): new `SectionHeading.astro` (roman-numeral label, tracked-caps display title, hairline, optional intro; reused by the section components). Hero: giant tracked first-name wordmark with small-caps surnames, `.frame-marks` portrait (arch removed), flat rectangular CTAs, date in italic display. Countdown: hairline-divided numerals, same `#countdown-container`/`data-target`/`#cd-*` hooks (ticks in the browser). Story: letter card with drop cap, italic pull quote, signatures. Preserved hooks: `#cal-dropdown-root`, `#cal-toggle-btn`, `#cal-menu`, `#btn-download-ics`, `#rsvp` link. Live-mode banner got right padding so it clears the fixed audio button. Commit: COMMIT_T2. `pnpm build`: passed. Visual spot check at 390px done.
+- T2 (completed): new `SectionHeading.astro` (roman-numeral label, tracked-caps display title, hairline, optional intro; reused by the section components). Hero: giant tracked first-name wordmark with small-caps surnames, `.frame-marks` portrait (arch removed), flat rectangular CTAs, date in italic display. Countdown: hairline-divided numerals, same `#countdown-container`/`data-target`/`#cd-*` hooks (ticks in the browser). Story: letter card with drop cap, italic pull quote, signatures. Preserved hooks: `#cal-dropdown-root`, `#cal-toggle-btn`, `#cal-menu`, `#btn-download-ics`, `#rsvp` link. Live-mode banner got right padding so it clears the fixed audio button. Commit: d685cf5. `pnpm build`: passed. Visual spot check at 390px done.
+
+- T3 (completed): Gallery tiles are flat hairline-framed photos with italic captions below; lightbox restyled with the same `data-lightbox-*` attributes and `#gallery-lightbox`, `#lightbox-*` ids. Additive a11y: tiles are `role="button" tabindex="0"` with Enter/Space activation, Escape closes the lightbox, close button is 44px with an aria-label. Timeline: hairline rail, rotated-square markers, caps time labels, no cards. Locations: flat paper cards, outlined badge, reception photo with `.frame-marks`, 44px map buttons; all Google Maps/Waze `href`s unchanged, map icons recoloured to the accent. Commit: COMMIT_T3. `pnpm build`: passed. Browser check at 390px: lightbox opens (click) and closes.
 
 ## Next step
 
-T3.
+T4.
